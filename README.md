@@ -16,7 +16,7 @@ Requirements:
 
 
 Before Running:
-In ems_site/settings.py , the update the following setting if needed.  
+In ems_site/settings.py , update the following setting if needed.  
 
     DATABASES = {
         'default': {
