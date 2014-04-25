@@ -16,17 +16,23 @@ Requirements:
 
 
 Before Running:
+
 In ems_site/settings.py , update the following setting if needed.  
 
-    DATABASES = {
-        'default': {
-            'NAME': 'ems_db', 
-            'ENGINE': 'django.db.backends.mysql',
-            'USER': 'root', 
-          #  'PASSWORD': '', 
-        }
-    }
+# use 'django.db.backends.mysql' if using MySQLdb driver
+# use 'mysql.connector.django' if using MySQL Connector/Python
 
+DATABASES = {
+    'default': {
+        'NAME': 'ems_db',
+        'ENGINE': 'mysql.connector.django';  
+        'USER': 'root',
+        'PASSWORD': '',
+    }
+}
+
+
+If running for first time, use a
 
 To Run :
 

@@ -53,6 +53,8 @@ ROOT_URLCONF = 'ems_site.urls'
 WSGI_APPLICATION = 'ems_site.wsgi.application'
 
 
+
+#----------------------For SQLite3--------------------------
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
@@ -62,15 +64,19 @@ WSGI_APPLICATION = 'ems_site.wsgi.application'
    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
    # }
 #}
-
+#-----------------------------------------------------------------
 
 
 #*****************************************************
 # REPLACE WITH YOUR MYSQL DB INFO 
+# For engine: 
+# use 'django.db.backends.mysql' if using MySQLdb driver
+# use 'mysql.connector.django' if using MySQL Connector/Python
+
 DATABASES = {
     'default': {
         'NAME': 'ems_db',
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'mysql.connector.django',
         'USER': 'root',
         'PASSWORD': '',
     }
