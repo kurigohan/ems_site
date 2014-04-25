@@ -55,12 +55,28 @@ WSGI_APPLICATION = 'ems_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
+#DATABASES = {
+ #   'default': {
+  #      'ENGINE': 'django.db.backends.sqlite3',
+   #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+   # }
+#}
+
+
+
+#*****************************************************
+# REPLACE WITH YOUR MYSQL DB INFO 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': 'ems_db',
+        'ENGINE': 'django.db.backends.mysql',
+        'USER': 'root',
+      #  'PASSWORD': '',
     }
 }
+#****************************************************
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
