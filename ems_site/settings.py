@@ -111,5 +111,5 @@ STATICFILES_DIRS = (
 #Template directory
 
 TEMPLATE_DIRS = (
-    BASE_DIR + '/templates', 
+    os.path.join(BASE_DIR, "templates"),
 )
