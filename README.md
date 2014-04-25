@@ -28,9 +28,9 @@ In ems_site/settings.py , update the following setting if needed.
         }
     }
 
-    ENGINE setting: 
-    - use 'django.db.backends.mysql' if using MySQLdb driver
-    - use 'mysql.connector.django' if using MySQL Connector/Python
+ENGINE setting: 
+- use 'django.db.backends.mysql' if using MySQLdb driver
+- use 'mysql.connector.django' if using MySQL Connector/Python
 
 
 To Run :
