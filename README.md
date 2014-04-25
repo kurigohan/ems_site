@@ -16,16 +16,24 @@ Requirements:
 
 
 Before Running:
-In ems_site/settings.py , replace the 'DATABASE=' statement with your database info if needed.
+In ems_site/settings.py , the update the following setting if needed.  
+
+    DATABASES = {
+        'default': {
+            'NAME': 'ems_db', 
+            'ENGINE': 'django.db.backends.mysql',
+            'USER': 'root', 
+          #  'PASSWORD': '', 
+        }
+    }
 
 
 To Run :
 
-1. From the terminal, change to the ems_site directory
-2. Use the command 'python manage.py syncdb' to sync django models to the database (if any model changes)
-3. Use the command 'python manage.py runserver' to start the developtment server
-4. Enter the server ip in your web browser (default is 127.0.0.1:8000)  to visit the site
-
+    1. From the terminal, change to the ems_site directory
+    2. Use the command 'python manage.py syncdb' to sync django models to the database (if any model changes)
+    3. Use the command 'python manage.py runserver' to start the developtment server
+    4. Enter the server ip in your web browser (default is 127.0.0.1:8000)  to visit the site
 
 
 Useful MySQL links:

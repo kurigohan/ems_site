@@ -71,7 +71,7 @@ DATABASES = {
         'NAME': 'ems_db',
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'root',
-      #  'PASSWORD': '',
+        'PASSWORD': '',
     }
 }
 #****************************************************
