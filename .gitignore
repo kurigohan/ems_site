@@ -1,0 +1,7 @@
+#ignore database file
+*.sqlite3
+#ignore python byte code files
+*.pyc
+#ignore temp files
+*\~*
+
