@@ -3,7 +3,7 @@ ems_site
 
 CS320 Project - Application for Event Management Database 
 
-Requirements:
+Requirements for Dev:
 
     - Django 1.5+
     - Python 2.7+
@@ -14,25 +14,24 @@ Requirements:
         2. MySQL Connector/Python 
         See https://docs.djangoproject.com/en/dev/ref/databases/ for more info.
 
-
+        
 Before Running:
 
 In ems_site/settings.py , update the following setting if needed.  
 
-# use 'django.db.backends.mysql' if using MySQLdb driver
-# use 'mysql.connector.django' if using MySQL Connector/Python
-
-DATABASES = {
-    'default': {
-        'NAME': 'ems_db',
-        'ENGINE': 'mysql.connector.django';  
-        'USER': 'root',
-        'PASSWORD': '',
+    DATABASES = {
+        'default': {
+            'NAME': 'ems_db',
+            'ENGINE': 'mysql.connector.django';  
+            'USER': 'root',
+            'PASSWORD': '',
+        }
     }
-}
 
+    ENGINE setting: 
+    - use 'django.db.backends.mysql' if using MySQLdb driver
+    - use 'mysql.connector.django' if using MySQL Connector/Python
 
-If running for first time, use a
 
 To Run :
 
