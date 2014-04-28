@@ -17,7 +17,7 @@ Requirements for Dev:
 
 Before Running:
 
-In ems_site/settings.py , update the following if needed.  
+In ems_site/settings.py , update the following if needed.
 
     DATABASES = {
         'default': {
