@@ -5,7 +5,8 @@ from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User
 from ems.forms import RegistrationForm
 
-def test_view(request, template_name='base.html'):
+@login_required
+def home(request, template_name='base.html'):
     return render(request, template_name)
 
 
