@@ -8,7 +8,8 @@ class RegistrationForm(forms.Form):
     Validates that the requested username is not already in use, and
     requires the password to be entered twice to catch typos.
     """
-    
+    first_name = forms.CharField(label="First Name", max_length=30)
+    last_name = forms.CharField(label="Last Name" , max_length=30)
     username = forms.RegexField(regex=r'^[\w.@+-]+$',
                                 max_length=30,
                                 label="Username",

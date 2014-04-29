@@ -7,7 +7,7 @@ from ems.forms import RegistrationForm
 
 @login_required
 def home(request, template_name='base.html'):
-    return render(request, template_name)
+    return render(request, template_name, {'user':request.user})
 
 
 def logout(request):
@@ -26,11 +26,14 @@ def register_user(request):
         form = RegistrationForm(request.POST)
         original = request.POST.get('username')
         if form.is_valid():
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
             username = form.cleaned_data['username']
             email = form.cleaned_data['email']
             password = form.cleaned_data['password1']
             test = {'username':username, 'email':email, 'original':original}
-            User.objects.create_user(username, email, password)
+            User.objects.create_user(username=username, email=email, password=password,
+                        first_name=first_name, last_name=last_name)
             new_user = authenticate(username=username, password=password)
             login(request, new_user)
             return redirect('home')
