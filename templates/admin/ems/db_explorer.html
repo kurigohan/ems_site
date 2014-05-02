@@ -1,0 +1,44 @@
+{% extends 'admin/base_site.html' %}
+{% load i18n admin_urls %}
+{% block content %}
+
+<form method='post' action='' role="form">{% csrf_token %}
+    {{ form.query.label }} <br>
+    {{ form.query }} <br>
+    <input class="btn btn-primary" type="submit" value="Execute Query"/>
+</form>
+<hr>
+<div>
+    {% if result_set %}
+    <table >
+    <thead>
+        <tr>
+    {% for col in columns %}
+        <th>{{col}}</th>
+    {% endfor %}
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for result in result_set %}
+        <tr>
+            {% for val in result %}
+            <td>{{val}}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+
+    </table>
+    {% endif %}
+
+{% if messages %}
+    <ul>
+    {% for error in messages %}
+        <li>{{error}}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+</div>
+
+{% endblock %}

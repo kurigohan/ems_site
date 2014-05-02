@@ -58,10 +58,20 @@ class RegistrationForm(forms.Form):
 
 
 class EventCreationForm(forms.Form):
-    name = forms.CharField(label='Name', max_length=255, widget=forms.TextInput(attrs={'class':'form-control form-group input-single'}))
-    category = forms.CharField(label='Category', max_length=50, widget=forms.TextInput(attrs={'class':'form-control form-group input-single'}))
-    description = forms.CharField(label='Description', max_length=1000, widget=forms.Textarea(attrs={'class':'form-control form-group input-single'}))
+    name = forms.CharField(label='Name', max_length=255, widget=forms.TextInput(attrs={'class':'form-control form-group'}))
+    category = forms.CharField(label='Category', max_length=50, widget=forms.TextInput(attrs={'class':'form-control form-group'}))
+    description = forms.CharField(label='Description', max_length=1000, widget=forms.Textarea(attrs={'class':'form-control form-group'}))
     location =  forms.ModelChoiceField(queryset=Location.objects.all(), widget=forms.Select(attrs={'class':'form-control',} ),)
     start_datetime = forms.DateTimeField(label='Start Date/Time')
     end_datetime = forms.DateTimeField(label='End Date/Time')
     is_public = forms.BooleanField(label='Public Event', required=False)
+
+
+
+class QueryForm(forms.Form):
+    query = forms.CharField(label='DB Query', widget=forms.Textarea(attrs={'class':'form-control form-group'}))
+
+    def clean(self):
+        if self.cleaned_data['query'][:6].lower() != 'select':
+            raise forms.ValidationError("The query must be a SELECT statement.")
+        return self.cleaned_data

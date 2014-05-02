@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect,get_object_or_404
+from django.http import Http404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User
-from django.db import transaction, IntegrityError
+from django.db import transaction, IntegrityError, connection
 from django.contrib import messages
 
 from ems.forms import RegistrationForm, EventCreationForm
