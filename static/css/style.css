@@ -738,6 +738,7 @@ td.beauty-hover {
 .well pre code {
   white-space: normal;
 }
+/*
 .btn {
   border-width: 1px;
   border-style: solid;
@@ -863,7 +864,7 @@ td.beauty-hover {
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary,
 .table-hover > tbody > tr > td.primary:hover, .table-hover > tbody > tr > th.primary:hover, .table-hover > tbody > tr.primary:hover > td, .table-hover > tbody > tr.primary:hover > th {
   color: #fff;
-  background-color: #5a8db6;
+  background-color: #ed8028;
   border-color: rgba(0, 0, 0, 0.3);
 }
 .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open .dropdown-toggle.btn-success,
@@ -889,7 +890,7 @@ td.beauty-hover {
   color: #fff;
   background-color: #b25050;
   border-color: rgba(0, 0, 0, 0.3);
-}
+} */
 .progress {
   overflow: visible;
 }
@@ -952,7 +953,7 @@ td.beauty-hover {
   background: #b8b8b8;
 }
 .progress-bar-primary .ui-state-default {
-  background: #5a8db6;
+  background: #ed8028;
 }
 .progress-bar-success .ui-state-default {
   background: #54ae86;

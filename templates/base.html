@@ -109,7 +109,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{% url 'my_events' %">
                             <i class="fa fa-exclamation"></i>
                             <span class="hidden-xs">My Events</span>
                         </a>
@@ -136,20 +136,21 @@
                 </ul>
             </div>
             <!--Start Content-->
-            {% block content %}
             <div id="content" class="col-xs-12 col-sm-10">
+            <!-- <div id="ajax-content"> -->
+                <div  class="col-sm-8 col-sm-offset-2" style="margin-top:2%">
+            {% block content %}
           <!--      <div class="preloader">
                     <img src="{% static 'img/devoops_getdata.gif' }" class="devoops-getdata" alt="preloader"/>
                 </div>-->
-                <div id="ajax-content">
-        
 
-                </div>
         
-            </div> 
-
 
             {% endblock %}
+
+                </div>
+            </div> 
+
             <!--End Content-->
         </div>
     </div>
@@ -165,10 +166,11 @@
     <script src="{% static 'plugins/justified-gallery/jquery.justifiedgallery.min.js' %}"></script>
     <script src="{% static 'plugins/tinymce/tinymce.min.js' %}"></script>
     <script src="{% static 'plugins/tinymce/jquery.tinymce.min.js' %}"></script>
+        {% block js %}{% endblock %}
     <!-- All functions for this theme + document.ready processing -->
     <script src="{% static 'js/devoops.js' %}"></script>
 
-    {% block js %}{% endblock %}
+
     </body>
 </html>
 

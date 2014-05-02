@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from ems.models import Event, Location
 
 class RegistrationForm(forms.Form):
     """
@@ -54,3 +55,13 @@ class RegistrationForm(forms.Form):
             if self.cleaned_data['password1'] != self.cleaned_data['password2']:
                 raise forms.ValidationError("The two password fields didn't match.")
         return self.cleaned_data
+
+
+class EventCreationForm(forms.Form):
+    name = forms.CharField(label='Name', max_length=255, widget=forms.TextInput(attrs={'class':'form-control form-group input-single'}))
+    category = forms.CharField(label='Category', max_length=50, widget=forms.TextInput(attrs={'class':'form-control form-group input-single'}))
+    description = forms.CharField(label='Description', max_length=1000, widget=forms.Textarea(attrs={'class':'form-control form-group input-single'}))
+    location =  forms.ModelChoiceField(queryset=Location.objects.all(), widget=forms.Select(attrs={'class':'form-control',} ),)
+    start_datetime = forms.DateTimeField(label='Start Date/Time')
+    end_datetime = forms.DateTimeField(label='End Date/Time')
+    is_public = forms.BooleanField(label='Public Event', required=False)

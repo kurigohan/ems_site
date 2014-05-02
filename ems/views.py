@@ -3,7 +3,13 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User
-from ems.forms import RegistrationForm
+from django.db import transaction, IntegrityError
+from django.contrib import messages
+
+from ems.forms import RegistrationForm, EventCreationForm
+from ems.models import Event, Reservation
+
+import time 
 
 @login_required
 def home(request, template_name='base.html'):
@@ -18,7 +24,7 @@ def logout(request):
     return redirect('login')
 
 
-def register_user(request):
+def register_user(request, template_name= 'registration/registration_form.html'):
     """
     Create a user
     """
@@ -40,4 +46,42 @@ def register_user(request):
     else:
         form = RegistrationForm()
 
-    return render(request, 'registration/registration_form.html', {'form':form})
+    return render(request, template_name, {'form':form})
+
+
+def my_events(request, template_name="event/my_events.html"):
+    event_list = Event.objects.filter(creator=request.user)
+    return render(request, template_name, {'event_list':event_list})
+
+def create_event(request, template_name="event/create_event.html"):
+    if request.method == 'POST':
+        form = EventCreationForm(request.POST)
+        if form.is_valid():
+            creator = request.user
+            name = form.cleaned_data['name']
+            category = form.cleaned_data['category']
+            description = form.cleaned_data['description']
+            location = form.cleaned_data['location']
+            is_public = form.cleaned_data['is_public']
+            start_datetime = form.cleaned_data['start_datetime']
+            end_datetime = form.cleaned_data['end_datetime']
+            try:
+                with transaction.atomic():
+                    event = Event(creator=creator,
+                                                name=name, 
+                                                category=category,
+                                                description=description,
+                                                is_public=is_public,)
+                    event.save()
+                    reservation = Reservation(event=event,
+                                                                    location=location,
+                                                                    start_datetime=start_datetime,
+                                                                    end_datetime=end_datetime)
+                    reservation.save()
+            except IntegrityError: pass
+                #messages.error(request, "An error occured during event creation")
+
+            return redirect("my_events")
+    else:
+        form = EventCreationForm()
+    return render(request, template_name, {'form':form})
