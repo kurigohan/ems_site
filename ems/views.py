@@ -13,9 +13,12 @@ import time
 
 @login_required
 def home(request, template_name='base.html'):
+    """
+    Home page
+    """
     return render(request, template_name, {'user':request.user})
 
-
+# --------------------- User Login/Registration ---------------------------
 def logout(request):
     """
     Log users out and re-direct them to the main page.
@@ -49,11 +52,23 @@ def register_user(request, template_name= 'registration/registration_form.html')
     return render(request, template_name, {'form':form})
 
 
+
+ # --------------- Events ---------------------   
+
+@login_required
 def my_events(request, template_name="event/my_events.html"):
+    """
+    View all events created by the user
+    """
     event_list = Event.objects.filter(creator=request.user)
     return render(request, template_name, {'event_list':event_list})
 
+
+@login_required
 def create_event(request, template_name="event/create_event.html"):
+    """
+    Create an event and reservation
+    """
     if request.method == 'POST':
         form = EventCreationForm(request.POST)
         if form.is_valid():
@@ -68,15 +83,15 @@ def create_event(request, template_name="event/create_event.html"):
             try:
                 with transaction.atomic():
                     event = Event(creator=creator,
-                                                name=name, 
-                                                category=category,
-                                                description=description,
-                                                is_public=is_public,)
+                                        name=name, 
+                                        category=category,
+                                        description=description,
+                                        is_public=is_public,)
                     event.save()
                     reservation = Reservation(event=event,
-                                                                    location=location,
-                                                                    start_datetime=start_datetime,
-                                                                    end_datetime=end_datetime)
+                                                location=location,
+                                                start_datetime=start_datetime,
+                                                end_datetime=end_datetime)
                     reservation.save()
             except IntegrityError: pass
                 #messages.error(request, "An error occured during event creation")
