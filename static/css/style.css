@@ -2369,5 +2369,16 @@ td.beauty-hover {
 
 .row-link{
   cursor:pointer;
+}
 
+.event-navbar {
+  position: relative;
+  min-height: 20px;
+  margin-bottom: 10px;
+  background-color: #f8f8f8;
+  border: 1px solid #f8f8f8;
+  box-shadow: 0 0 4px #D8D8D8;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
 }

@@ -1,18 +1,27 @@
 
 {% load staticfiles %}
 
-
+<!--
+    <div class="event-navbar  container-fluid">
+      <span class="navbar-brand no-click">Event Management</span>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#" class="btn btn-default"><strong>Create Event</strong></a></li>
+        </ul>
+    </div>
+-->
 <div class="box">
     <div class="box-header">
         <div class="box-name">
             <span>My Events</span>
         </div>
         <div class="box-icons">
+            <a href="{% url 'create_event' %}" class="event-ajax-link">
+                <i class="fa fa-plus"></i>
+            </a>
             <a class="expand-link">
                 <i class="fa fa-expand"></i>
             </a>
         </div>
-        <div class="no-move"></div>
     </div>
     <div class="box-content no-padding">
         <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-1">
@@ -30,7 +39,7 @@
             <!-- Start: list_row -->
             {% for event in event_list %}
 
-                <tr  data-href="{% url 'event_details' event_id=event.id %}" class="tool-ajax-link row-link">
+                <tr  data-href="{% url 'event_details' event_id=event.id %}" class="event-ajax-link row-link">
                     <td>{{event.name}}</td>
                     <td>{{event.category}}</td>
                     <td> {{event.description}} </td>
@@ -51,9 +60,15 @@
 </div>
 
 <script>
-    $('.tool-ajax-link').click( function (e) {
+    $('.event-ajax-link').click( function (e) {
         e.preventDefault();
-        var url = $(this).attr('data-href');
+        var url;
+        if($(this).is('tr')){
+            url = $(this).attr('data-href');
+        }
+        else{
+            url = $(this).attr('href');
+        }
         window.location.hash = url;
         LoadAjaxContent(url);
     });

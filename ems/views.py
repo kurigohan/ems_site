@@ -10,19 +10,21 @@ from django.contrib import messages
 from ems.forms import RegistrationForm, EventCreationForm
 from ems.models import Event, Reservation, Location, Approval, Attendance
 
-@login_required
-def home(request, template_name='ajax/home.html'):
-    """
-    Home page
-    """
-    return render(request, template_name, {'user':request.user})
 
 @login_required
 def dashboard(request, template_name='base.html'):
     """
-    Dashboard
+    Displays dashboard
     """
     return render(request, template_name, {'user':request.user})
+
+@login_required
+def home(request, template_name='ajax/home.html'):
+    """
+    Displays AJAX home page
+    """
+    return render(request, template_name, {'user':request.user})
+
 
 
 # --------------------- User Login/Registration ---------------------------
