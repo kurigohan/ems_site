@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from datetime import datetime
 
 class Event(models.Model):
@@ -31,6 +32,8 @@ class Event(models.Model):
     def __unicode__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('event_details', args=[str(self.id)])
 
 class Location(models.Model):
     name = models.CharField(max_length=255)
@@ -41,6 +44,9 @@ class Location(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('location_details', args=[str(self.id)])
 
 class Reservation(models.Model):
     event = models.OneToOneField(Event)

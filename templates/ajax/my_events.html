@@ -39,7 +39,7 @@
             <!-- Start: list_row -->
             {% for event in event_list %}
 
-                <tr  data-href="{% url 'event_details' event_id=event.id %}" class="event-ajax-link row-link">
+                <tr  data-href="{{event.get_absolute_url}}" class="event-ajax-link row-link">
                     <td>{{event.name}}</td>
                     <td>{{event.category}}</td>
                     <td> {{event.description}} </td>
