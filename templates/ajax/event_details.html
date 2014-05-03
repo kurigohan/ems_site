@@ -1,0 +1,31 @@
+
+<table class="table">
+    <tr>
+        <td>Name: </td>
+        <td>{{event.name}}</td>
+    </tr>
+    <tr>
+        <td>Category: </td>
+        <td>{{event.category}}</td>
+    </tr>
+    <tr>
+        <td>Description: </td>
+        <td>{{event.description}}</td>
+    </tr>
+    <tr>
+        <td>Location: </td>
+        <td>{{event.location}}</td>
+    </tr>
+    <tr>
+        <td>Time: </td>
+        <td>{{event.start.time}} - {{event.end.time}}</td>
+    </tr>
+    <tr>
+        <td>Date: </td>
+        {% if event.start.date == event.end.date %}
+        <td>{{event.start.date}}</td>
+        {% else %}
+        <td>{{event.start.date}} - {{event.end.date}}</td>
+        {% endif %}
+    </tr>
+</table>

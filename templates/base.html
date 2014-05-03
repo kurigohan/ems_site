@@ -103,13 +103,13 @@
             <div id="sidebar-left" class="col-xs-2 col-sm-2">
                 <ul class="nav main-menu">
                     <li>
-                        <a href="#">
+                        <a href="{% url 'home' %}" class="ajax-link">
                             <i class="fa fa-home"></i>
                             <span class="hidden-xs">Home</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'my_events' %}">
+                        <a href="{% url 'my_events' %}" class="ajax-link">
                             <i class="fa fa-exclamation"></i>
                             <span class="hidden-xs">My Events</span>
                         </a>
@@ -118,7 +118,7 @@
                         </ul>-->
                     </li>
                     <li>
-                        <a href="#" class="ajax-link">
+                        <a href="#">
                             <i class="fa fa-table"></i>
                              <span class="hidden-xs">Browse Events</span>
                         </a>
@@ -137,12 +137,12 @@
             </div>
             <!--Start Content-->
             <div id="content" class="col-xs-12 col-sm-10">
-            <!-- <div id="ajax-content"> -->
-                <div  class="col-sm-8 col-sm-offset-2" style="margin-top:2%">
+            <div id="ajax-content"  class="col-sm-8 col-sm-offset-2" style="margin-top:2%"> 
+
             {% block content %}
-          <!--      <div class="preloader">
-                    <img src="{% static 'img/devoops_getdata.gif' }" class="devoops-getdata" alt="preloader"/>
-                </div>-->
+               <div class="preloader">
+                    <img src="{% static 'img/devoops_getdata.gif' %}" class="devoops-getdata" alt="preloader"/>
+                </div>
 
         
 

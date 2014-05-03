@@ -11,11 +11,19 @@ from ems.forms import RegistrationForm, EventCreationForm
 from ems.models import Event, Reservation, Location, Approval, Attendance
 
 @login_required
-def home(request, template_name='base.html'):
+def home(request, template_name='ajax/home.html'):
     """
     Home page
     """
     return render(request, template_name, {'user':request.user})
+
+@login_required
+def dashboard(request, template_name='base.html'):
+    """
+    Dashboard
+    """
+    return render(request, template_name, {'user':request.user})
+
 
 # --------------------- User Login/Registration ---------------------------
 @login_required
@@ -56,7 +64,7 @@ def register_user(request, template_name= 'registration/registration_form.html')
  # --------------- Events ---------------------   
 
 @login_required
-def my_events(request, template_name="event/my_events.html"):
+def my_events(request, template_name="ajax/my_events.html"):
     """
     View all events created by the user
     """
@@ -65,7 +73,7 @@ def my_events(request, template_name="event/my_events.html"):
 
 
 @login_required
-def create_event(request, template_name="event/create_event.html"):
+def create_event(request, template_name="ajax/create_event.html"):
     """
     Create an event and reservation
     """
@@ -103,7 +111,7 @@ def create_event(request, template_name="event/create_event.html"):
 
 
 @login_required
-def event_details(request, event_id, template_name="event/event_details.html"):
+def event_details(request, event_id, template_name="ajax/event_details.html"):
     """
     View event and reservation details
     """

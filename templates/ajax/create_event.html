@@ -1,0 +1,55 @@
+
+
+<h1 class="page-header">Create an event</h1>
+
+<form method='post' action='' role="form">{% csrf_token %}
+    <p>
+        <label>{{ form.name.label }}:</label>
+        {{ form.name.errors }}
+        {{ form.name }}
+    </p>
+    <p>
+        <label>{{ form.category.label }}:</label>
+        {{ form.category.errors }}
+        {{ form.category }}
+    </p>
+
+    <p>
+        <label>{{ form.description.label }}:</label>
+        {{ form.description.errors }} 
+        {{ form.description }}
+    </p>
+
+    <p>
+     <label>{{ form.location.label }}:</label>
+        {{ form.location.errors }}
+        {{ form.location }}
+     </p>   
+    <p>
+
+        <label for="id_start_datetime">Start Date/Time:</label> 
+        {{ form.start_datetime.errors }}
+        {{form.start_datetime}}
+       <!-- <div class="input-group date" id="datetimepicker1">
+            <input id="id_start_datetime" type="text" class="form-control"/>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calender"></span></span>
+        </div>-->
+    </p>
+    <p>
+        <label for="id_end_datetime">End Date/Time:</label>
+        {{ form.end_datetime.errors }}
+        {{ form.end_datetime}}
+    <!--    <div class="input-group date" id="datetimepicker2">
+            <input id="id_end_datetime" type="text" class="form-control"/>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calender"></span></span>
+        </div>-->
+    </p>
+    <p>
+     <label>{{ form.is_public.label }}: </label>
+        {{ form.is_public }}
+     </p>   
+    <hr>
+    <input class="btn btn-primary" type="submit" value="Create  Event"/>
+
+</form>
+

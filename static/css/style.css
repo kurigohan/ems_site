@@ -348,9 +348,9 @@ a.show-sidebar:hover {
   padding-left: 15px;
   line-height: 28px;
 }
-.box-name:hover {
+/*.box-name:hover {
   cursor: move;
-}
+}*/
 .box-name > i {
   margin-right:5px;
 }
@@ -2363,4 +2363,11 @@ td.beauty-hover {
 
 .orange{
   color: #e69138 !important; 
+}
+
+
+
+.row-link{
+  cursor:pointer;
+
 }
