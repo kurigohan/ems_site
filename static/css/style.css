@@ -2371,6 +2371,7 @@ td.beauty-hover {
   cursor:pointer;
 }
 
+/*
 .event-navbar {
   position: relative;
   min-height: 20px;
@@ -2383,7 +2384,8 @@ td.beauty-hover {
   border-radius: 3px;
 }
 
+
 .table-hover > tbody > tr:hover > td,
 .table-hover > tbody > tr:hover > th {
   background-color: #ffa053 !important;
-}
+}*/
