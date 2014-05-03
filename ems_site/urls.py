@@ -14,6 +14,6 @@ urlpatterns = patterns('',
     url(r'^register/$', views.register_user, name='register'),
     url(r'^my_events/$', views.my_events, name='my_events'),
     url(r'^create_event/$', views.create_event, name='create_event'),
-    url(r'^event_details/(?P<event_id>\w+)/$', views.event_details, name='event_details'),
-    url(r'^location_details/(?P<loc_id>\w+)/$', views.location_details, name='location_details'),
+    url(r'^event/(?P<event_id>\w+)/$', views.event_details, name='event_details'),
+    url(r'^location/(?P<loc_id>\w+)/$', views.location_details, name='location_details'),
 )

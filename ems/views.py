@@ -124,11 +124,6 @@ def browse_events(request, template_name="event/browse_events.html"):
 
 
 
-
-
-
-
-
 @login_required
 def location_details(request, loc_id, template_name="location/location_details.html"):
     """
