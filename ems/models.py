@@ -13,15 +13,13 @@ class Event(models.Model):
     staff_fee = models.DecimalField(max_digits=4, decimal_places=2, default=0)
     public_fee = models.DecimalField(max_digits=4, decimal_places=2, default=0)
 
-    @property
+
     def start(self):
         return self.reservation.start_datetime
 
-    @property
     def end(self):
         return self.reservation.end_datetime
 
-    @property
     def location(self):
         return self.reservation.location
 
@@ -29,6 +27,9 @@ class Event(models.Model):
         if self.student_fee == 0 and self.staff_fee == 0 and self.public_fee == 0:
             return True
         return False
+
+    def __unicode__(self):
+        return self.name
 
 
 class Location(models.Model):

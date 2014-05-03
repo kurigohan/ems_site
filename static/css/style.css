@@ -2366,7 +2366,7 @@ td.beauty-hover {
 }
 
 
-
+/* Custom */
 .row-link{
   cursor:pointer;
 }
@@ -2381,4 +2381,9 @@ td.beauty-hover {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
+}
+
+.table-hover > tbody > tr:hover > td,
+.table-hover > tbody > tr:hover > th {
+  background-color: #ffa053 !important;
 }
