@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect,get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
@@ -8,9 +8,7 @@ from django.db import transaction, IntegrityError, connection
 from django.contrib import messages
 
 from ems.forms import RegistrationForm, EventCreationForm
-from ems.models import Event, Reservation
-
-import time 
+from ems.models import Event, Reservation, Location, Approval, Attendance
 
 @login_required
 def home(request, template_name='base.html'):
@@ -20,6 +18,7 @@ def home(request, template_name='base.html'):
     return render(request, template_name, {'user':request.user})
 
 # --------------------- User Login/Registration ---------------------------
+@login_required
 def logout(request):
     """
     Log users out and re-direct them to the main page.
@@ -101,3 +100,42 @@ def create_event(request, template_name="event/create_event.html"):
     else:
         form = EventCreationForm()
     return render(request, template_name, {'form':form})
+
+
+@login_required
+def event_details(request, event_id, template_name="event/event_details.html"):
+    """
+    View event and reservation details
+    """
+    event = get_object_or_404(Event, pk=event_id)
+
+    return render(request, template_name, {'event':event})
+
+
+@login_required
+def browse_events(request, template_name="event/browse_events.html"):
+    """
+    View all approved events/reservations
+    """
+    reservation_list = Reservation.objects.filter(is_approved=True)
+
+    return render(request, template_name, {'reservation_list':reservation_list})
+
+
+
+
+
+
+
+
+
+@login_required
+def location_details(request, loc_id, template_name="location/location_details.html"):
+    """
+    View location details
+    """
+    location = get_object_or_404(Event, pk=loc_id)
+
+    return render(request, template_name, {'location':location})
+
+

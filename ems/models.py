@@ -25,6 +25,7 @@ class Reservation(models.Model):
     location = models.OneToOneField(Location)
     start_datetime = models.DateTimeField()
     end_datetime = models.DateTimeField()
+    is_approved = models.BooleanField(default=False)
 
 class Approval(models.Model):
     approver = models.OneToOneField(User)
