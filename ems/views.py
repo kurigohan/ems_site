@@ -73,6 +73,13 @@ def my_events(request, template_name="ajax/my_events.html"):
     event_list = Event.objects.filter(creator=request.user)
     return render(request, template_name, {'event_list':event_list})
 
+@login_required
+def all_events(request, template_name="ajax/all_events.html"):
+    """
+    View all approved events/reservations
+    """
+    reservation_list = Reservation.objects.filter(is_approved=True)
+    return render(request, template_name, {'reservation_list':reservation_list})
 
 @login_required
 def create_event(request, template_name="ajax/create_event.html"):
@@ -120,18 +127,6 @@ def event_details(request, event_id, template_name="ajax/event_details.html"):
     event = get_object_or_404(Event, pk=event_id)
     event.start 
     return render(request, template_name, {'event':event})
-
-
-@login_required
-def browse_events(request, template_name="event/browse_events.html"):
-    """
-    View all approved events/reservations
-    """
-    reservation_list = Reservation.objects.filter(is_approved=True)
-
-    return render(request, template_name, {'reservation_list':reservation_list})
-
-
 
 
 @login_required

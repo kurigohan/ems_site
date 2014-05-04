@@ -12,7 +12,7 @@
 <div class="box">
     <div class="box-header">
         <div class="box-name">
-            <span>Browse Events</span>
+            <span>All Events</span>
         </div>
         <div class="box-icons">
             <a href="{% url 'create_event' %}" class="event-ajax-link" title="Add a new event">
@@ -37,15 +37,15 @@
             </thead>
             <tbody>
             <!-- Start: list_row -->
-            {% for event in event_list %}
+            {% for reservation in reservation_list %}
 
                 <tr  data-href="{{event.get_absolute_url}}" class="event-ajax-link row-link">
-                    <td>{{event.name}}</td>
-                    <td>{{event.category}}</td>
-                    <td> {{event.description}} </td>
-                    <td>{{event.reservation.start_datetime.date}}</td>
-                    <td>{{event.reservation.start_datetime.time}}</td>
-                    <td>{{event.reservation.location}}</td>
+                    <td>{{reservation.event.name}}</td>
+                    <td>{{reservation.event.category}}</td>
+                    <td> {{reservation.event.description}} </td>
+                    <td>{{reservation.start_datetime.date}}</td>
+                    <td>{{reservation.start_datetime.time}}</td>
+                    <td>{{reservation.location}}</td>
                 </tr>
 
 
