@@ -117,6 +117,19 @@ def create_event(request, template_name="ajax/create_event.html"):
         form = EventCreationForm()
     return render(request, template_name, {'form':form})
 
+
+
+@login_required
+def event_details(request, event_id, template_name="ajax/event_details.html"):
+    """
+    View event and reservation details
+    """
+    event = get_object_or_404(Event, pk=event_id)
+    return render(request, template_name, {'event':event})
+
+
+
+#--------------------NOT IMPLEMENTED---------------------------
 @login_required
 def edit_event(request, event_id, template_name=""):
     return
@@ -137,13 +150,12 @@ def deny_event(request, event_id):
     return #should redirect 
 
 
+# For extra 4 queries given by professor
 @login_required
-def event_details(request, event_id, template_name="ajax/event_details.html"):
-    """
-    View event and reservation details
-    """
-    event = get_object_or_404(Event, pk=event_id)
-    return render(request, template_name, {'event':event})
+def summary_report(request, template_name=""):
+    return
+
+#--------------------------------------------------------------------------
 
 
 @login_required
