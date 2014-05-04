@@ -49,14 +49,14 @@ class Location(models.Model):
         return reverse('location_details', args=[str(self.id)])
 
 class Reservation(models.Model):
-    event = models.OneToOneField(Event)
-    location = models.OneToOneField(Location)
+    event = models.ForeignKey(Event)
+    location = models.ForeignKey(Location)
     start_datetime = models.DateTimeField()
     end_datetime = models.DateTimeField()
     is_approved = models.BooleanField(default=False)
 
 class Approval(models.Model):
-    approver = models.OneToOneField(User)
+    approver = models.ForeignKey(User)
     reservation = models.OneToOneField(Reservation)
     date = models.DateTimeField()
 
