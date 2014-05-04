@@ -1,8 +1,6 @@
 
-
 <h1 class="page-header">Create an event</h1>
-
-<form method='post' action='' role="form">{% csrf_token %}
+<form method='post' action="{% url 'create_event' %}" role="form" id="ajax-form">{% csrf_token %}
     <p>
         <label>{{ form.name.label }}:</label>
         {{ form.name.errors }}
@@ -52,4 +50,31 @@
     <input class="btn btn-primary" type="submit" value="Create  Event"/>
 
 </form>
+<p id="ajax-error"></p>
+{% if messages %}
+<ul>
+{% for message in messages %}
+    <li>{{ message }}</li>
+{% endfor %}
+</ul>
+{% endif %}
 
+
+
+<script type="text/javascript">
+    var frm = $('#ajax-form');
+    frm.submit( function() {
+        $.ajax({
+            type: frm.attr('method'),
+            url: frm.attr('action'),
+            data: frm.serialize(),
+            success: function(data) {
+                $('#ajax-content').html(data);
+            },
+            error: function(data) {
+                $('#ajax-error').html('Form could not be submitted.');
+            }
+        });
+        return false;
+    });
+</script>

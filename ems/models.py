@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from datetime import datetime
 
 class Event(models.Model):
-    creator = models.OneToOneField(User)
+    creator = models.ForeignKey(User)
     category = models.CharField(max_length=50, blank=True)
     name = models.CharField(max_length=255)
     description = models.TextField(max_length=1000, blank=True)
@@ -49,11 +49,14 @@ class Location(models.Model):
         return reverse('location_details', args=[str(self.id)])
 
 class Reservation(models.Model):
-    event = models.ForeignKey(Event)
+    event = models.OneToOneField(Event)
     location = models.ForeignKey(Location)
     start_datetime = models.DateTimeField()
     end_datetime = models.DateTimeField()
     is_approved = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return self.event.name
 
 class Approval(models.Model):
     approver = models.ForeignKey(User)

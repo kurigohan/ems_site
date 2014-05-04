@@ -110,10 +110,9 @@ def create_event(request, template_name="ajax/create_event.html"):
                                                 start_datetime=start_datetime,
                                                 end_datetime=end_datetime)
                     reservation.save()
-            except IntegrityError: pass
-                #messages.error(request, "An error occured during event creation")
-
-            return redirect("my_events")
+                    return redirect("my_events")
+            except IntegrityError: 
+                messages.error(request, "Error: event could not be created.")
     else:
         form = EventCreationForm()
     return render(request, template_name, {'form':form})
