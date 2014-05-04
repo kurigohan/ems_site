@@ -132,13 +132,25 @@ def event_details(request, event_id, template_name="ajax/event_details.html"):
 #--------------------NOT IMPLEMENTED---------------------------
 @login_required
 def edit_event(request, event_id, template_name=""):
+    """
+    Edit existing event
+    """
     return
 
 
 @login_required
 def delete_event(request, event_id):
+    """
+    Delete an event
+    """
     return #should redirect 
 
+@login_required
+def pending_events(request, template_name=""):
+    """
+    View all events that need approval/denial
+    """
+    return
 
 @login_required
 def approve_event(request, event_id):
