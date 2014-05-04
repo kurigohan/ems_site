@@ -24,7 +24,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -107,6 +107,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
+#For web hosting
+#STATIC_URL = 'http://andyn.webfactional.com/static/'
+#STATIC_ROOT = '/home/andyn/webapps/ems_static/'
 
 #Template directory
 

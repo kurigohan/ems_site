@@ -55,7 +55,7 @@ def register_user(request, template_name= 'registration/registration_form.html')
                         first_name=first_name, last_name=last_name)
             new_user = authenticate(username=username, password=password)
             login(request, new_user)
-            return redirect('home')
+            return redirect('dashboard')
     else:
         form = RegistrationForm()
 
@@ -118,7 +118,7 @@ def event_details(request, event_id, template_name="ajax/event_details.html"):
     View event and reservation details
     """
     event = get_object_or_404(Event, pk=event_id)
-
+    event.start 
     return render(request, template_name, {'event':event})
 
 

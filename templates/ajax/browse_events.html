@@ -1,0 +1,75 @@
+
+{% load staticfiles %}
+
+<!--
+    <div class="event-navbar  container-fluid">
+      <span class="navbar-brand no-click">Event Management</span>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#" class="btn btn-default"><strong>Create Event</strong></a></li>
+        </ul>
+    </div>
+-->
+<div class="box">
+    <div class="box-header">
+        <div class="box-name">
+            <span>Browse Events</span>
+        </div>
+        <div class="box-icons">
+            <a href="{% url 'create_event' %}" class="event-ajax-link" title="Add a new event">
+                <i class="fa fa-plus"></i>
+            </a>
+            <a class="expand-link" title='Expand the table'>
+                <i class="fa fa-expand"></i>
+            </a>
+        </div>
+    </div>
+    <div class="box-content no-padding">
+        <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-1">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Location</th> 
+                </tr>
+            </thead>
+            <tbody>
+            <!-- Start: list_row -->
+            {% for event in event_list %}
+
+                <tr  data-href="{{event.get_absolute_url}}" class="event-ajax-link row-link">
+                    <td>{{event.name}}</td>
+                    <td>{{event.category}}</td>
+                    <td> {{event.description}} </td>
+                    <td>{{event.reservation.start_datetime.date}}</td>
+                    <td>{{event.reservation.start_datetime.time}}</td>
+                    <td>{{event.reservation.location}}</td>
+                </tr>
+
+
+
+            {% endfor %}
+            
+            <!-- End: list_row -->
+            </tbody>
+            
+        </table>
+    </div>
+</div>
+
+<script>
+    $('.event-ajax-link').click( function (e) {
+        e.preventDefault();
+        var url;
+        if($(this).is('tr')){
+            url = $(this).attr('data-href');
+        }
+        else{
+            url = $(this).attr('href');
+        }
+        window.location.hash = url;
+        LoadAjaxContent(url);
+    });
+</script>

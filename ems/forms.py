@@ -69,7 +69,7 @@ class EventCreationForm(forms.Form):
 
 
 class QueryForm(forms.Form):
-    query = forms.CharField(label='DB Query', widget=forms.Textarea(attrs={'class':'form-control form-group'}))
+    query = forms.CharField(label='SQL SELECT Statement', widget=forms.Textarea(attrs={'class':'form-control form-group'}))
 
     def clean(self):
         if self.cleaned_data['query'][:6].lower() != 'select':
