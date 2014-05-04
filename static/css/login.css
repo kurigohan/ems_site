@@ -43,3 +43,37 @@ body {
 .container hr {
   border-color: #808080;
 }
+
+#logo {
+  position:relative;
+  background: #525252 url(../img/devoops_pattern_b10.png) 0 0 repeat;
+}
+#logo a {
+  color: #fff;
+  font-family: 'Righteous', cursive;
+  display: block;
+  font-size: 20px;
+  line-height: 50px;
+  /*background: url(../img/logo.png) right 42px no-repeat;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;*/
+}
+
+#logo a:hover {
+  text-decoration: none;
+}
+.navbar {
+  margin: 0;
+  border: 0;
+  position: fixed;
+  top:0;
+  left: 0;
+  width:100%;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  box-shadow: 0 1px 2px #272727;
+  z-index: 2000;
+}
