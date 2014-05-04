@@ -9,17 +9,25 @@ class RegistrationForm(forms.Form):
     Validates that the requested username is not already in use, and
     requires the password to be entered twice to catch typos.
     """
-    first_name = forms.CharField(label="First Name", max_length=30)
-    last_name = forms.CharField(label="Last Name" , max_length=30)
+    first_name = forms.CharField(label="First Name", max_length=30,  
+                                                        widget=forms.TextInput(attrs={'class':'form-control ', 'placeholder':'First Name'}),
+                                                        error_messages={'required': 'No first name entered'})
+    last_name = forms.CharField(label="Last Name" , max_length=30,  
+                                                        widget=forms.TextInput(attrs={'class':'form-control ', 'placeholder':'Last Name'}),
+                                                        error_messages={'required': 'No last name entered'})
     username = forms.RegexField(regex=r'^[\w.@+-]+$',
                                 max_length=30,
                                 label="Username",
-                                error_messages={'invalid': "This value may contain only letters, numbers and @/./+/-/_ characters."})
-    email = forms.EmailField(label="E-mail")
-    password1 = forms.CharField(widget=forms.PasswordInput,
-                                label="Password")
-    password2 = forms.CharField(widget=forms.PasswordInput,
-                                label="Password (again)")
+                                error_messages={'invalid': "This value may contain only letters, numbers and @/./+/-/_ characters", 'required':'No username entered'},
+                                widget=forms.TextInput(attrs={'class':'form-control ', 'placeholder':'Username'}))
+    email = forms.EmailField(label="E-mail",  widget=forms.EmailInput(attrs={'class':'form-control ', 'placeholder':'Email'}),
+                                error_messages={'required': 'No email entered'})
+    password1 = forms.CharField(label="Password",
+                                widget=forms.PasswordInput(attrs={'class':'form-control ', 'placeholder':'Password'}),
+                                error_messages={'required': 'No password entered'})
+    password2 = forms.CharField(label="Password (again)",
+                                widget=forms.PasswordInput(attrs={'class':'form-control ', 'placeholder':'Re-Type Password'}),
+                                error_messages={'required': 'Password not confirmed'})
 
     def clean_username(self):
         """
@@ -62,8 +70,8 @@ class EventCreationForm(forms.Form):
     category = forms.CharField(label='Category', max_length=50, widget=forms.TextInput(attrs={'class':'form-control form-group'}))
     description = forms.CharField(label='Description', max_length=1000, widget=forms.Textarea(attrs={'class':'form-control form-group'}))
     location =  forms.ModelChoiceField(queryset=Location.objects.all(), widget=forms.Select(attrs={'class':'form-control',} ),)
-    start_datetime = forms.DateTimeField(label='Start Date/Time')
-    end_datetime = forms.DateTimeField(label='End Date/Time')
+    start_datetime = forms.DateTimeField(label='Start Date/Time',  widget=forms.TextInput(attrs={'class':'form-control form-group', 'placeholder':'YYYY/MM/DD HH:MM'}))
+    end_datetime = forms.DateTimeField(label='End Date/Time',  widget=forms.TextInput(attrs={'class':'form-control form-group', 'placeholder':'YYYY/MM/DD HH:MM'}))
     is_public = forms.BooleanField(label='Public Event', required=False)
 
 

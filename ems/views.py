@@ -117,6 +117,25 @@ def create_event(request, template_name="ajax/create_event.html"):
         form = EventCreationForm()
     return render(request, template_name, {'form':form})
 
+@login_required
+def edit_event(request, event_id, template_name=""):
+    return
+
+
+@login_required
+def delete_event(request, event_id):
+    return #should redirect 
+
+
+@login_required
+def approve_event(request, event_id):
+    return #should redirect 
+
+
+@login_required
+def deny_event(request, event_id):
+    return #should redirect 
+
 
 @login_required
 def event_details(request, event_id, template_name="ajax/event_details.html"):
@@ -130,7 +149,7 @@ def event_details(request, event_id, template_name="ajax/event_details.html"):
 @login_required
 def location_details(request, loc_id, template_name="ajax/location_details.html"):
     """
-    View location details
+    View location details and upcoming events at that location
     """
     location = get_object_or_404(Event, pk=loc_id)
     reservation_list = Reservation.objects.filter(is_approved=True, location=location.id)
