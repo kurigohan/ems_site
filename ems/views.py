@@ -124,17 +124,16 @@ def event_details(request, event_id, template_name="ajax/event_details.html"):
     View event and reservation details
     """
     event = get_object_or_404(Event, pk=event_id)
-    event.start 
     return render(request, template_name, {'event':event})
 
 
 @login_required
-def location_details(request, loc_id, template_name="location/location_details.html"):
+def location_details(request, loc_id, template_name="ajax/location_details.html"):
     """
     View location details
     """
     location = get_object_or_404(Event, pk=loc_id)
-
-    return render(request, template_name, {'location':location})
+    reservation_list = Reservation.objects.filter(is_approved=True, location=location.id)
+    return render(request, template_name, {'location':location, 'reservation_list':reservation_list})
 
 

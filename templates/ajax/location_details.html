@@ -1,20 +1,38 @@
 
-{% load staticfiles %}
-
-<!--
-    <div class="event-navbar  container-fluid">
-      <span class="navbar-brand no-click">Event Management</span>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="#" class="btn btn-default"><strong>Create Event</strong></a></li>
-        </ul>
-    </div>
--->
+<h1 class="page-header">Location Details</h1>
+<table class="table">
+    <tr>
+        <td>Name:</td>
+        <td>{{location.name}}</td>
+    </tr>
+    <tr>
+        <td>Building:</td>
+        <td>{{location.building}}</td>
+    </tr>
+    <tr>
+        <td>Room:</td>
+        <td>{{location.room}}</td>
+    </tr>
+    <tr>
+        <td>Description:</td>
+        <td>{{location.description}}</td>
+    </tr>
+    <tr>
+        <td>Capacity:</td>
+        <td>{{location.capacity}}</td>
+    </tr>
+</table>
+<br>
+{% if reservation_list %}
 <div class="box">
     <div class="box-header">
         <div class="box-name">
-            <span>All Events</span>
+            <span>Upcoming events at {{location.name}}</span>
         </div>
         <div class="box-icons">
+            <a class="collapse-link">
+                <i class="fa fa-chevron-up"></i>
+            </a>
             <a class="expand-link" title='Expand the table'>
                 <i class="fa fa-expand"></i>
             </a>
@@ -29,24 +47,18 @@
                     <th>Description</th>
                     <th>Date</th>
                     <th>Time</th>
-                    <th>Location</th> 
                 </tr>
             </thead>
             <tbody>
             <!-- Start: list_row -->
             {% for reservation in reservation_list %}
-
                 <tr  data-href="{{reservation.event.get_absolute_url}}" class="event-ajax-link row-link">
                     <td>{{reservation.event.name}}</td>
                     <td>{{reservation.event.category}}</td>
                     <td> {{reservation.event.description}} </td>
                     <td>{{reservation.start_datetime.date}}</td>
                     <td>{{reservation.start_datetime.time}}</td>
-                    <td>{{reservation.location}}</td>
                 </tr>
-
-
-
             {% endfor %}
             
             <!-- End: list_row -->
@@ -55,17 +67,12 @@
         </table>
     </div>
 </div>
+{% endif %}
 
 <script type="text/javascript">
     $('.event-ajax-link').click( function (e) {
         e.preventDefault();
-        var url;
-        if($(this).is('tr')){
-            url = $(this).attr('data-href');
-        }
-        else{
-            url = $(this).attr('href');
-        }
+        var url = $(this).attr('data-href');
         window.location.hash = url;
         LoadAjaxContent(url);
     });
