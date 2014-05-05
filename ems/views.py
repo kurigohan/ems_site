@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, login, authenticate
@@ -122,7 +122,7 @@ def create_event(request, template_name="ajax/create_event.html"):
                 messages.error(request, "%s: Event could not be created" % e)
     else:
         form = EventCreationForm()
-    return render(request, template_name, {'form':form})
+    return render(request, template_name, {'form':form, 'redirect_url':reverse('my_events')})
 
 
 
@@ -157,16 +157,23 @@ def edit_event(request, event_id, template_name="ajax/edit_event.html"):
     else:
         form1= EventEditForm(instance=event)
         form2 = ReservationEditForm(instance=event.reservation)
-    return render(request, template_name, {'event_form':form1, 'reservation_form':form2, 'event':event})
+    return render(request, template_name, {'event_form':form1, 'reservation_form':form2, 'event_id':event.id, 'redirect_url':reverse('my_events')})
 
-#--------------------NOT IMPLEMENTED---------------------------
 
 @login_required
 def delete_event(request, event_id):
     """
     Delete an event
     """
-    return #should redirect 
+    event = get_object_or_404(Event, pk=event_id)
+    reservation = event.reservation
+    if request.user == event.creator:
+        with transaction.atomic():
+            reservation.delete()
+            event.delete()
+    return redirect('my_events')
+
+#--------------------NOT IMPLEMENTED---------------------------
 
 
 # Mod powers 

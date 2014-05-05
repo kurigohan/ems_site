@@ -1,6 +1,6 @@
 
 <h2 class="page-header">Create an event</h2>
-<form method='post' action="{% url 'create_event' %}" role="form" id="ajax-form">{% csrf_token %}
+<form method='post' action="{% url 'create_event' %}" role="form" id="ajax-form" data-redirect="{{redirect_url}}">{% csrf_token %}
     <p>
         <label>{{ form.name.label }}:</label>
         {{ form.name.errors }}
@@ -138,21 +138,23 @@
             prefix: '$'
         });
 
-/*
-       var frm = $('#ajax-form');
+        var frm = $('#ajax-form');
         frm.submit( function() {
             $.ajax({
                 type: frm.attr('method'),
                 url: frm.attr('action'),
                 data: frm.serialize(),
                 success: function(data) {
+                    window.location.hash = frm.attr('data-redirect')
                     $('#ajax-content').html(data);
+                    AjaxContentLinks();
                 },
                 error: function(data) {
                     $('#ajax-error').html('Form could not be submitted.');
                 }
             });
             return false;
-        });*/
+        });
+    
     });
 </script>

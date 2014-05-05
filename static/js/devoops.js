@@ -256,8 +256,6 @@ function LoadAjaxContent(url){
 			$('.preloader').hide();
 			// Activate any ajax link in the new ajax page
 			AjaxContentLinks();
-			// Activate ajax forms
-			AjaxForm();
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			alert(errorThrown);
@@ -282,29 +280,6 @@ function AjaxContentLinks(){
 		LoadAjaxContent(url);
 	});
 }
-
-function AJaxForm(){
-	var frm = $('#ajax-form');
-	if(frm) {
-		var redirect_url; 
-		frm.submit( function() {
-		            	$.ajax({
-		                type: frm.attr('method'),
-		                url: frm.attr('action'),
-		                data: frm.serialize(),
-		                success: function(data) {
-		                    $('#ajax-content').html(data);
-		                    AjaxContentLinks();
-		                },
-		                error: function(data) {
-		                    $('#ajax-error').html('Form could not be submitted.');
-		                }
-		            	});
-	            		return false;
-	        	});
-	}
-}
-
 
 //
 //  Function maked all .box selector is draggable, to disable for concrete element add class .no-drop

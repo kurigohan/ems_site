@@ -1,6 +1,6 @@
 
 <h2 class="page-header">Edit Event</h2>
-<form method='post' action="{% url 'edit_event' event_id=event.id %}" role="form" id="ajax-form">{% csrf_token %}
+<form method='post' action="{% url 'edit_event' event_id=event_id %}" role="form" id="ajax-form" data-redirect="{{redirect_url}}">{% csrf_token %}
     <p>
         <label>{{ event_form.name.label }}:</label>
         {{ event_form.name.errors }}
@@ -138,14 +138,16 @@
             prefix: '$'
         });
 
-    /*    var frm = $('#ajax-form');
+       var frm = $('#ajax-form');
         frm.submit( function() {
             $.ajax({
                 type: frm.attr('method'),
                 url: frm.attr('action'),
                 data: frm.serialize(),
                 success: function(data) {
+                    window.location.hash = frm.attr('data-redirect')
                     $('#ajax-content').html(data);
+                    AjaxContentLinks();
                 },
                 error: function(data) {
                     $('#ajax-error').html('Form could not be submitted.');
@@ -153,5 +155,5 @@
             });
             return false;
         });
-    });*/
+    });
 </script>
