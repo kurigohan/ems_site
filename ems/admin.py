@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.conf.urls import patterns, include, url
 from django.shortcuts import render
-from ems.models import Event, Location, Reservation, Attendance, Approval
+from ems.models import Event, Location, Reservation, Attendance, Approval, Category
 from ems.forms import QueryForm
 from django.http import Http404
 from django.contrib import messages
@@ -45,6 +45,7 @@ admin.site.register(Location)
 admin.site.register(Reservation)
 admin.site.register(Attendance)
 admin.site.register(Approval)
+admin.site.register(Category)
 
 
 admin_urls = get_admin_urls(admin.site.get_urls())

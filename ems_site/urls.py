@@ -18,4 +18,5 @@ urlpatterns = patterns('',
     url(r'^create_event/$', views.create_event, name='create_event'),
     url(r'^event/(?P<event_id>\w+)/$', views.event_details, name='event_details'),
     url(r'^location/(?P<loc_id>\w+)/$', views.location_details, name='location_details'),
+    url(r'^query/$', views.query, name='query'),
 )

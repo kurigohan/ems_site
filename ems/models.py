@@ -3,9 +3,18 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from datetime import datetime
 
+class Category(models.Model):
+	name = models.CharField(max_length=255)
+	
+	def __unicode__(self):
+		return self.name
+
+	class Meta:
+		verbose_name_plural = "categories"
+
 class Event(models.Model):
     creator = models.ForeignKey(User)
-    category = models.CharField(max_length=50, blank=True)
+    category = models.ForeignKey(Category)
     name = models.CharField(max_length=255)
     description = models.TextField(max_length=1000, blank=True)
     is_active = models.BooleanField(default=False)
@@ -66,5 +75,3 @@ class Approval(models.Model):
 class Attendance(models.Model):
     user = models.ForeignKey(User)
     event = models.ForeignKey(Event)
-
-

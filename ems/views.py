@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.db import transaction, IntegrityError, connection
 from django.contrib import messages
 
-from ems.forms import RegistrationForm, EventCreationForm, EventEditForm, ReservationEditForm
+from ems.forms import RegistrationForm, EventCreationForm, EventEditForm, ReservationEditForm, QueryForm
 from ems.models import Event, Reservation, Location, Approval, Attendance
 
 
@@ -197,3 +197,10 @@ def location_details(request, loc_id, template_name="ajax/location_details.html"
     return render(request, template_name, {'location':location, 'reservation_list':reservation_list})
 
 
+@login_required
+def query(request, template_name="ajax/query.html"):
+    """
+    Query the database
+    """
+    form = QueryForm()
+    return render(request, template_name, {'form':form})

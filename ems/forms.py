@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from ems.models import Event, Location, Reservation
+from ems.models import Event, Location, Reservation, Category
 
 class RegistrationForm(forms.Form):
     """
@@ -67,7 +67,7 @@ class RegistrationForm(forms.Form):
 
 class EventCreationForm(forms.Form):
     name = forms.CharField(label='Name', max_length=255, widget=forms.TextInput(attrs={'class':'form-control '}))
-    category = forms.CharField(label='Category', max_length=50, widget=forms.TextInput(attrs={'class':'form-control '}))
+    category =  forms.ModelChoiceField(queryset=Category.objects.all(), widget=forms.Select(attrs={'class':'form-control',} ),)
     description = forms.CharField(label='Description', max_length=1000, widget=forms.Textarea(attrs={'class':'form-control'}))
     location =  forms.ModelChoiceField(queryset=Location.objects.all(), widget=forms.Select(attrs={'class':'form-control',} ),)
     start_datetime = forms.DateTimeField(label='Start Date/Time',  widget=forms.DateTimeInput(attrs={'class':'form-control ', 'placeholder':'mm/dd/yy hh:mm'}))
@@ -80,7 +80,7 @@ class EventCreationForm(forms.Form):
 
 class EventEditForm(forms.ModelForm):
     name = forms.CharField(label='Name', max_length=255, widget=forms.TextInput(attrs={'class':'form-control '}))
-    category = forms.CharField(label='Category', max_length=50, widget=forms.TextInput(attrs={'class':'form-control '}))
+    category =  forms.ModelChoiceField(queryset=Category.objects.all(), widget=forms.Select(attrs={'class':'form-control',} ),)
     description = forms.CharField(label='Description', max_length=1000, widget=forms.Textarea(attrs={'class':'form-control '}))
     is_public = forms.BooleanField(label='Public Event', required=False)
     student_fee = forms.DecimalField(max_digits=4, decimal_places=2)
