@@ -9,7 +9,7 @@ from django.contrib import messages
 
 from ems.forms import RegistrationForm, EventCreationForm, EventEditForm, ReservationEditForm, QueryForm
 from ems.models import Event, Reservation, Location, Approval, Attendance
-
+from ems import status_const # constants for reservation status
 
 @login_required
 def dashboard(request, template_name='base.html'):
@@ -78,7 +78,7 @@ def all_events(request, template_name="ajax/all_events.html"):
     """
     View all approved events/reservations
     """
-    reservation_list = Reservation.objects.filter(is_approved=True)
+    reservation_list = Reservation.objects.filter(status=status_const.APPROVED)
     return render(request, template_name, {'reservation_list':reservation_list})
 
 @login_required
@@ -118,8 +118,8 @@ def create_event(request, template_name="ajax/create_event.html"):
                                                 end_datetime=end_datetime)
                     reservation.save()
                     return redirect("my_events")
-            except IntegrityError: 
-                messages.error(request, "Error: event could not be created.")
+            except Exception as e: 
+                messages.error(request, "%s: Event could not be created" % e)
     else:
         form = EventCreationForm()
     return render(request, template_name, {'form':form})
@@ -146,12 +146,18 @@ def edit_event(request, event_id, template_name="ajax/edit_event.html"):
         form1 = EventEditForm(request.POST, instance=event)
         form2 = ReservationEditForm(request.POST, instance=event.reservation)
         if form1.is_valid() and form2.is_valid():
-            form2.save()
-            form1.save()
+            try:
+                with transaction.atomic():
+                    form2.save()
+                    form1.save()
+                return redirect('my_events')
+            except Exception as e:
+                messages.error(request, "%s: Event could not be edited" % e)
+
     else:
         form1= EventEditForm(instance=event)
         form2 = ReservationEditForm(instance=event.reservation)
-    return render(request, template_name, {'event_form':form1, 'reservation_form':form2})
+    return render(request, template_name, {'event_form':form1, 'reservation_form':form2, 'event':event})
 
 #--------------------NOT IMPLEMENTED---------------------------
 
@@ -161,6 +167,9 @@ def delete_event(request, event_id):
     Delete an event
     """
     return #should redirect 
+
+
+# Mod powers 
 
 @login_required
 def pending_events(request, template_name=""):
@@ -193,7 +202,7 @@ def location_details(request, loc_id, template_name="ajax/location_details.html"
     View location details and upcoming events at that location
     """
     location = get_object_or_404(Location, pk=loc_id)
-    reservation_list = Reservation.objects.filter(is_approved=True, location=location.id)
+    reservation_list = Reservation.objects.filter(status=status_const.APPROVED, location=location.id)
     return render(request, template_name, {'location':location, 'reservation_list':reservation_list})
 
 

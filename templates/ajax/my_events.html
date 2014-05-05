@@ -15,7 +15,7 @@
             <span>My Events</span>
         </div>
         <div class="box-icons">
-            <a href="{% url 'create_event' %}" class="event-ajax-link" title="Add a new event">
+            <a href="{% url 'create_event' %}" class="ajax-link" title="Add a new event">
                 <i class="fa fa-plus"></i>
             </a>
             <a class="expand-link" title='Expand the table'>
@@ -39,7 +39,7 @@
             <!-- Start: list_row -->
             {% for event in event_list %}
 
-                <tr  data-href="{{event.get_absolute_url}}" class="event-ajax-link row-link">
+                <tr  data-href="{{event.get_absolute_url}}" class="ajax-link row-link">
                     <td>{{event.name}}</td>
                     <td>{{event.category}}</td>
                     <td> {{event.description}} </td>
@@ -58,18 +58,3 @@
         </table>
     </div>
 </div>
-
-<script>
-    $('.event-ajax-link').click( function (e) {
-        e.preventDefault();
-        var url;
-        if($(this).is('tr')){
-            url = $(this).attr('data-href');
-        }
-        else{
-            url = $(this).attr('href');
-        }
-        window.location.hash = url;
-        LoadAjaxContent(url);
-    });
-</script>

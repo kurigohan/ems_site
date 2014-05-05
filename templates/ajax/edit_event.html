@@ -1,6 +1,6 @@
 
 <h2 class="page-header">Edit Event</h2>
-<form method='post' action="{% url 'create_event' %}" role="form" id="ajax-form">{% csrf_token %}
+<form method='post' action="{% url 'edit_event' event_id=event.id %}" role="form" id="ajax-form">{% csrf_token %}
     <p>
         <label>{{ event_form.name.label }}:</label>
         {{ event_form.name.errors }}
@@ -110,7 +110,7 @@
         {{ event_form.is_public }}
     </p>   
     <hr>
-    <input class="btn btn-primary" type="submit" value="Create  Event"/>
+    <input class="btn btn-primary" type="submit" value="Edit  Event"/>
 
 </form>
 <p id="ajax-error"></p>
@@ -138,7 +138,7 @@
             prefix: '$'
         });
 
-        var frm = $('#ajax-form');
+    /*    var frm = $('#ajax-form');
         frm.submit( function() {
             $.ajax({
                 type: frm.attr('method'),
@@ -153,5 +153,5 @@
             });
             return false;
         });
-    });
+    });*/
 </script>

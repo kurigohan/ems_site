@@ -52,7 +52,7 @@
             <tbody>
             <!-- Start: list_row -->
             {% for reservation in reservation_list %}
-                <tr  data-href="{{reservation.event.get_absolute_url}}" class="event-ajax-link row-link">
+                <tr  data-href="{{reservation.event.get_absolute_url}}" class="ajax-link row-link">
                     <td>{{reservation.event.name}}</td>
                     <td>{{reservation.event.category}}</td>
                     <td> {{reservation.event.description}} </td>
@@ -68,12 +68,3 @@
     </div>
 </div>
 {% endif %}
-
-<script type="text/javascript">
-    $('.event-ajax-link').click( function (e) {
-        e.preventDefault();
-        var url = $(this).attr('data-href');
-        window.location.hash = url;
-        LoadAjaxContent(url);
-    });
-</script>

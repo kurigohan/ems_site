@@ -16,7 +16,7 @@
     </tr>
     <tr>
         <td>Location: </td>
-        <td><a href="{{event.location.get_absolute_url}}" class="loc-ajax-link">{{event.location}}</td>
+        <td><a href="{{event.location.get_absolute_url}}" class="ajax-link">{{event.location}}</td>
     </tr>
     <tr>
         <td>Time: </td>
@@ -45,11 +45,6 @@
         <td>Student ${{event.student_fee}} | Staff ${{event.staff_fee}} | Public ${{event.public_fee}}</td>
     </tr>
 </table>
-<script>
-    $('.loc-ajax-link').click( function (e) {
-        e.preventDefault();
-        var url = $(this).attr('href');
-        window.location.hash = url;
-        LoadAjaxContent(url);
-    });
-</script>
+{% if user == event.creator %}
+<a href="{% url 'edit_event' event_id=event.id %}" class="btn btn-primary ajax-link">Edit</a>
+{% endif %}

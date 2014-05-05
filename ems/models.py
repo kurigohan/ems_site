@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from datetime import datetime
+from ems import status_const
 
 class Category(models.Model):
 	name = models.CharField(max_length=255)
@@ -62,7 +63,7 @@ class Reservation(models.Model):
     location = models.ForeignKey(Location)
     start_datetime = models.DateTimeField()
     end_datetime = models.DateTimeField()
-    is_approved = models.BooleanField(default=False)
+    status = models.CharField(max_length=30, default=status_const.PENDING)
 
     def __unicode__(self):
         return self.event.name

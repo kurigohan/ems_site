@@ -241,6 +241,10 @@ function LoadSparkLineScript(callback){
 //
 //  Function for load content from url and put in $('.ajax-content') block
 //
+
+
+
+
 function LoadAjaxContent(url){
 	$('.preloader').show();
 	$.ajax({
@@ -250,6 +254,10 @@ function LoadAjaxContent(url){
 		success: function(data) {
 			$('#ajax-content').html(data);
 			$('.preloader').hide();
+			// Activate any ajax link in the new ajax page
+			AjaxContentLinks();
+			// Activate ajax forms
+			AjaxForm();
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			alert(errorThrown);
@@ -258,6 +266,46 @@ function LoadAjaxContent(url){
 		async: false
 	});
 }
+
+
+function AjaxContentLinks(){
+	$('#ajax-content .ajax-link').click( function (e) {
+		e.preventDefault();
+		var url;
+		if($(this).is('tr')){
+			url = $(this).attr('data-href');
+		}
+		else{
+			url = $(this).attr('href');
+		}
+		window.location.hash = url;
+		LoadAjaxContent(url);
+	});
+}
+
+function AJaxForm(){
+	var frm = $('#ajax-form');
+	if(frm) {
+		var redirect_url; 
+		frm.submit( function() {
+		            	$.ajax({
+		                type: frm.attr('method'),
+		                url: frm.attr('action'),
+		                data: frm.serialize(),
+		                success: function(data) {
+		                    $('#ajax-content').html(data);
+		                    AjaxContentLinks();
+		                },
+		                error: function(data) {
+		                    $('#ajax-error').html('Form could not be submitted.');
+		                }
+		            	});
+	            		return false;
+	        	});
+	}
+}
+
+
 //
 //  Function maked all .box selector is draggable, to disable for concrete element add class .no-drop
 //
@@ -2426,6 +2474,7 @@ $(document).ready(function () {
 		var button = $('<div class="text-center"><a href="index.html" class="btn btn-primary">Unlock</a></div>');
 		OpenModalBox(header, form, button);
 	});
+
 });
 
 
