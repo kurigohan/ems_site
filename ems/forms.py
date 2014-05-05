@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from ems.models import Event, Location
+from ems.models import Event, Location, Category
 
 class RegistrationForm(forms.Form):
     """
@@ -67,7 +67,7 @@ class RegistrationForm(forms.Form):
 
 class EventCreationForm(forms.Form):
     name = forms.CharField(label='Name', max_length=255, widget=forms.TextInput(attrs={'class':'form-control form-group'}))
-    category = forms.CharField(label='Category', max_length=50, widget=forms.TextInput(attrs={'class':'form-control form-group'}))
+    category =  forms.ModelChoiceField(queryset=Category.objects.all(), widget=forms.Select(attrs={'class':'form-control',} ),)
     description = forms.CharField(label='Description', max_length=1000, widget=forms.Textarea(attrs={'class':'form-control form-group'}))
     location =  forms.ModelChoiceField(queryset=Location.objects.all(), widget=forms.Select(attrs={'class':'form-control',} ),)
     start_datetime = forms.DateTimeField(label='Start Date/Time',  widget=forms.TextInput(attrs={'class':'form-control form-group', 'placeholder':'YYYY/MM/DD HH:MM'}))
