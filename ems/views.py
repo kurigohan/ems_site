@@ -192,7 +192,7 @@ def location_details(request, loc_id, template_name="ajax/location_details.html"
     """
     View location details and upcoming events at that location
     """
-    location = get_object_or_404(Event, pk=loc_id)
+    location = get_object_or_404(Location, pk=loc_id)
     reservation_list = Reservation.objects.filter(is_approved=True, location=location.id)
     return render(request, template_name, {'location':location, 'reservation_list':reservation_list})
 
