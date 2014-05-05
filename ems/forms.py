@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from ems.models import Event, Location
+from ems.models import Event, Location, Reservation
 
 class RegistrationForm(forms.Form):
     """
@@ -66,18 +66,41 @@ class RegistrationForm(forms.Form):
 
 
 class EventCreationForm(forms.Form):
-    name = forms.CharField(label='Name', max_length=255, widget=forms.TextInput(attrs={'class':'form-control form-group'}))
-    category = forms.CharField(label='Category', max_length=50, widget=forms.TextInput(attrs={'class':'form-control form-group'}))
-    description = forms.CharField(label='Description', max_length=1000, widget=forms.Textarea(attrs={'class':'form-control form-group'}))
+    name = forms.CharField(label='Name', max_length=255, widget=forms.TextInput(attrs={'class':'form-control '}))
+    category = forms.CharField(label='Category', max_length=50, widget=forms.TextInput(attrs={'class':'form-control '}))
+    description = forms.CharField(label='Description', max_length=1000, widget=forms.Textarea(attrs={'class':'form-control'}))
     location =  forms.ModelChoiceField(queryset=Location.objects.all(), widget=forms.Select(attrs={'class':'form-control',} ),)
-    start_datetime = forms.DateTimeField(label='Start Date/Time',  widget=forms.TextInput(attrs={'class':'form-control form-group', 'placeholder':'YYYY/MM/DD HH:MM'}))
-    end_datetime = forms.DateTimeField(label='End Date/Time',  widget=forms.TextInput(attrs={'class':'form-control form-group', 'placeholder':'YYYY/MM/DD HH:MM'}))
+    start_datetime = forms.DateTimeField(label='Start Date/Time',  widget=forms.DateTimeInput(attrs={'class':'form-control ', 'placeholder':'mm/dd/yy hh:mm'}))
+    end_datetime = forms.DateTimeField(label='End Date/Time',  widget=forms.DateTimeInput(attrs={'class':'form-control ', 'placeholder':'mm/dd/yy hh:mm',}))
     is_public = forms.BooleanField(label='Public Event', required=False)
+    student_fee = forms.DecimalField(max_digits=4, decimal_places=2, widget=forms.NumberInput(attrs={'value':'0'}))
+    staff_fee = forms.DecimalField(max_digits=4, decimal_places=2, widget=forms.NumberInput(attrs={'value':'0'}))
+    public_fee = forms.DecimalField(max_digits=4, decimal_places=2, widget=forms.NumberInput(attrs={'value':'0'}))
 
 
+class EventEditForm(forms.ModelForm):
+    name = forms.CharField(label='Name', max_length=255, widget=forms.TextInput(attrs={'class':'form-control '}))
+    category = forms.CharField(label='Category', max_length=50, widget=forms.TextInput(attrs={'class':'form-control '}))
+    description = forms.CharField(label='Description', max_length=1000, widget=forms.Textarea(attrs={'class':'form-control '}))
+    is_public = forms.BooleanField(label='Public Event', required=False)
+    student_fee = forms.DecimalField(max_digits=4, decimal_places=2)
+    staff_fee = forms.DecimalField(max_digits=4, decimal_places=2)
+    public_fee = forms.DecimalField(max_digits=4, decimal_places=2)
+
+    class Meta:
+        model = Event
+        fields = ('name', 'category', 'description', 'is_public', 'student_fee', 'staff_fee', 'public_fee')
+
+class ReservationEditForm(forms.ModelForm):
+    location =  forms.ModelChoiceField(queryset=Location.objects.all(), widget=forms.Select(attrs={'class':'form-control',} ),)
+    start_datetime = forms.DateTimeField(label='Start Date/Time',  widget=forms.DateTimeInput(attrs={'class':'form-control','placeholder':'mm/dd/yy hh:mm'}))
+    end_datetime = forms.DateTimeField(label='End Date/Time',  widget=forms.DateTimeInput(attrs={'class':'form-control', 'placeholder':'mm/dd/yy hh:mm'}))
+    class Meta:
+        model = Reservation
+        fields = ('location', 'start_datetime', 'end_datetime')
 
 class QueryForm(forms.Form):
-    query = forms.CharField(label='SQL SELECT Statement', widget=forms.Textarea(attrs={'class':'form-control form-group'}))
+    query = forms.CharField(label='SQL SELECT Statement', widget=forms.Textarea(attrs={'class':'form-control '}))
 
     def clean(self):
         if self.cleaned_data['query'][:6].lower() != 'select':

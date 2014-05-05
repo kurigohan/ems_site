@@ -1,27 +1,27 @@
 
-<h2 class="page-header">Create an event</h2>
+<h2 class="page-header">Edit Event</h2>
 <form method='post' action="{% url 'create_event' %}" role="form" id="ajax-form">{% csrf_token %}
     <p>
-        <label>{{ form.name.label }}:</label>
-        {{ form.name.errors }}
-        {{ form.name }}
+        <label>{{ event_form.name.label }}:</label>
+        {{ event_form.name.errors }}
+        {{ event_form.name }}
     </p>
     <p>
-        <label>{{ form.category.label }}:</label>
-        {{ form.category.errors }}
-        {{ form.category }}
-    </p>
-
-    <p>
-        <label>{{ form.description.label }}:</label>
-        {{ form.description.errors }} 
-        {{ form.description }}
+        <label>{{ event_form.category.label }}:</label>
+        {{ event_form.category.errors }}
+        {{ event_form.category }}
     </p>
 
     <p>
-     <label>{{ form.location.label }}:</label>
-        {{ form.location.errors }}
-        {{ form.location }}
+        <label>{{ event_form.description.label }}:</label>
+        {{ event_form.description.errors }} 
+        {{ event_form.description }}
+    </p>
+
+    <p>
+     <label>{{ reservation_form.location.label }}:</label>
+        {{ reservation_form.location.errors }}
+        {{ reservation_form.location }}
     </p>
 
     <!-- Dates/Times -->
@@ -33,9 +33,9 @@
                     <label for="id_start_datetime">Start Date/Time:</label> 
                 </td>
                 <td>
-                {{ form.start_datetime.errors }}
+                {{ reservation_form.start_datetime.errors }}
                  <div class="input-group date datetimepicker">
-                    {{form.start_datetime}}
+                    {{reservation_form.start_datetime}}
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calender"></span></span>
                 </div>
                 </td>
@@ -49,9 +49,9 @@
                     <label for="id_end_datetime">End Date/Time:</label> 
                 </td>
                 <td>
-                {{ form.end_datetime.errors }}
+                {{ reservation_form.end_datetime.errors }}
                  <div class="input-group date datetimepicker">
-                    {{form.end_datetime}}
+                    {{ reservation_form.end_datetime}}
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calender"></span></span>
                 </div>
                 </td>
@@ -71,8 +71,8 @@
                         <label>Student:</label>
                      </td>
                      <td>
-                         {{form.student_fee.errors}}
-                         {{form.student_fee}}
+                         {{event_form.student_fee.errors}}
+                         {{event_form.student_fee}}
                      </td>
                  </tr>
              </table>
@@ -84,8 +84,8 @@
                         <label>Staff:</label>
                      </td>
                      <td>
-                         {{form.staff_fee.errors}}
-                         {{form.staff_fee}}
+                         {{event_form.staff_fee.errors}}
+                         {{event_form.staff_fee}}
                      </td>
                  </tr>
              </table>
@@ -97,8 +97,8 @@
                         <label>Public:</label>
                      </td>
                      <td>
-                         {{form.public_fee.errors}}
-                         {{form.public_fee}}
+                         {{event_form.public_fee.errors}}
+                         {{event_form.public_fee}}
                      </td>
                  </tr>
              </table>
@@ -106,8 +106,8 @@
      </div>
     <!-- End Prices -->
     <p>
-     <label>{{ form.is_public.label }}: </label>
-        {{ form.is_public }}
+     <label>{{ event_form.is_public.label }}: </label>
+        {{ event_form.is_public }}
     </p>   
     <hr>
     <input class="btn btn-primary" type="submit" value="Create  Event"/>

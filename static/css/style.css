@@ -1296,10 +1296,10 @@ td.beauty-hover {
   border-radius: 2px;
   color: #000;
 }
-.form-control {
+/*.form-control {
   height: 26px;
   padding: 2px 12px;
-}
+}*/
 .input-lg {
   height:39px;
 }
@@ -2371,6 +2371,10 @@ td.beauty-hover {
   cursor:pointer;
 }
 
+
+.table-borderless td{
+    border: none !important;
+}
 /*
 .event-navbar {
   position: relative;

@@ -1,6 +1,7 @@
 
-<h1 class="page-header">Event Details</h1>
-<table class="table">
+<h2>Event Details</h2>
+<br>
+<table class="table table-striped">
     <tr>
         <td>Name: </td>
         <td>{{event.name}}</td>
@@ -28,6 +29,20 @@
         {% else %}
         <td>{{event.start.date}} - {{event.end.date}}</td>
         {% endif %}
+    </tr>
+    <tr>
+        <td>Accessibility: </td>
+        <td>
+        {% if event.is_public %}
+        public
+        {% else %}
+        private
+        {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <td>Admission: </td>
+        <td>Student ${{event.student_fee}} | Staff ${{event.staff_fee}} | Public ${{event.public_fee}}</td>
     </tr>
 </table>
 <script>

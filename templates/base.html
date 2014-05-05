@@ -5,13 +5,10 @@
     <head>
         <title>{% block title %}{% endblock %}</title>
         <link href="{% static 'plugins/bootstrap/bootstrap.css' %}" rel="stylesheet">
-        <link href="{% static 'plugins/jquery-ui/jquery-ui.min.css' %}" rel="stylesheet">
         <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
         <link href='http://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
         <link href="{% static 'plugins/fancybox/jquery.fancybox.css' %}" rel="stylesheet">
-        <link href="{% static 'plugins/fullcalendar/fullcalendar.css' %}" rel="stylesheet">
-        <link href="{% static 'plugins/xcharts/xcharts.min.css' %}" rel="stylesheet">
-        <link href="{% static 'plugins/select2/select2.css' %}" rel="stylesheet">
+        <link href="{% static 'plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css' %}" rel="stylesheet">
         <link href="{% static 'css/style.css' %}" rel="stylesheet">
         {% block css %}{% endblock %}
     </head>
@@ -152,12 +149,11 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <!--<script src="http://code.jquery.com/jquery.js"></script>-->
     <script src="{% static 'plugins/jquery/jquery-2.1.0.min.js' %}"></script>
-    <script src="{% static 'plugins/jquery-ui/jquery-ui.min.js' %}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{% static 'plugins/bootstrap/bootstrap.min.js' %}"></script>
-    <script src="{% static 'plugins/justified-gallery/jquery.justifiedgallery.min.js' %}"></script>
-    <script src="{% static 'plugins/tinymce/tinymce.min.js' %}"></script>
-    <script src="{% static 'plugins/tinymce/jquery.tinymce.min.js' %}"></script>
+    <script src="{% static 'plugins/moment/moment.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-touchspin/bootstrap.touchspin.js' %}"></script>
         {% block js %}{% endblock %}
     <!-- All functions for this theme + document.ready processing -->
     <script src="{% static 'js/devoops.js' %}"></script>

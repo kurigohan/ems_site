@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.db import transaction, IntegrityError, connection
 from django.contrib import messages
 
-from ems.forms import RegistrationForm, EventCreationForm
+from ems.forms import RegistrationForm, EventCreationForm, EventEditForm, ReservationEditForm
 from ems.models import Event, Reservation, Location, Approval, Attendance
 
 
@@ -97,13 +97,20 @@ def create_event(request, template_name="ajax/create_event.html"):
             is_public = form.cleaned_data['is_public']
             start_datetime = form.cleaned_data['start_datetime']
             end_datetime = form.cleaned_data['end_datetime']
+            student_fee = form.cleaned_data['student_fee']
+            staff_fee = form.cleaned_data['staff_fee']
+            public_fee = form.cleaned_data['public_fee']
+
             try:
                 with transaction.atomic():
                     event = Event(creator=creator,
                                         name=name, 
                                         category=category,
                                         description=description,
-                                        is_public=is_public,)
+                                        is_public=is_public,
+                                        student_fee=student_fee,
+                                        staff_fee=staff_fee,
+                                        public_fee=public_fee)
                     event.save()
                     reservation = Reservation(event=event,
                                                 location=location,
@@ -129,14 +136,24 @@ def event_details(request, event_id, template_name="ajax/event_details.html"):
 
 
 
-#--------------------NOT IMPLEMENTED---------------------------
 @login_required
-def edit_event(request, event_id, template_name=""):
+def edit_event(request, event_id, template_name="ajax/edit_event.html"):
     """
     Edit existing event
     """
-    return
+    event = get_object_or_404(Event, pk=event_id)
+    if request.method == 'POST':
+        form1 = EventEditForm(request.POST, instance=event)
+        form2 = ReservationEditForm(request.POST, instance=event.reservation)
+        if form1.is_valid() and form2.is_valid():
+            form2.save()
+            form1.save()
+    else:
+        form1= EventEditForm(instance=event)
+        form2 = ReservationEditForm(instance=event.reservation)
+    return render(request, template_name, {'event_form':form1, 'reservation_form':form2})
 
+#--------------------NOT IMPLEMENTED---------------------------
 
 @login_required
 def delete_event(request, event_id):
