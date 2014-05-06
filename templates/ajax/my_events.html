@@ -43,7 +43,7 @@
                 <tr  data-href="{{event.get_absolute_url}}" class="ajax-link row-link">
                     <td>{{event.name}}</td>
                     <td>{{event.category}}</td>
-                    <td> {{event.description}} </td>
+                    <td> {{event.description_short}} </td>
                     <td>
                         {% if event.start.date == event.end.date %}
                             {{event.start.date}}

@@ -64,7 +64,7 @@
 </table>
 
 {% if user == event.creator %}
-<a href="{% url 'edit_event' event_id=event.id %}" class="btn btn-primary">Edit</a>
+<a href="{% url 'edit_event' event_id=event.id %}" class="btn btn-primary ajax-link">Edit</a>
 <a href="{% url 'delete_event' event_id=event.id %}" class="btn btn-primary confirm">Delete</a>
 {% endif %}
 

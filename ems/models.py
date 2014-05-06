@@ -37,6 +37,12 @@ class Event(models.Model):
     def status(self):
         return self.reservation.status
 
+    def description_short(self):
+        short_descrip = self.description
+        if len(short_descrip) > 30:
+            short_descrip = '%s...' % short_descrip[:27]
+        return short_descrip
+
     def is_free(self):
         if self.student_fee == 0 and self.staff_fee == 0 and self.public_fee == 0:
             return True
