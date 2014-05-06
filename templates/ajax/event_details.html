@@ -42,9 +42,50 @@
     </tr>
     <tr>
         <td>Admission: </td>
-        <td>Student ${{event.student_fee}} | Staff ${{event.staff_fee}} | Public ${{event.public_fee}}</td>
+        <td>
+        {% if event.is_free %}
+            Free
+        {% else %}
+            Student ${{event.student_fee}} | Staff ${{event.staff_fee}} | Public ${{event.public_fee}}</td>
+        {% endif %}
     </tr>
+    <!-- Show event status if user created the event, otherwise show the creator's username -->
+    {% if event.creator == user %}
+    <tr>
+        <td>Status: </td>
+        <td>{{event.status}}</td>
+    </tr>
+    {% else %}
+    <tr>
+        <td>Creator: </td>
+        <td>{{event.creator.username}}</td>
+    </tr>
+    {% endif %}
 </table>
+
 {% if user == event.creator %}
-<a href="{% url 'edit_event' event_id=event.id %}" class="btn btn-primary ajax-link">Edit</a>
+<a href="{% url 'edit_event' event_id=event.id %}" class="btn btn-primary">Edit</a>
+<a href="{% url 'delete_event' event_id=event.id %}" class="btn btn-primary confirm">Delete</a>
 {% endif %}
+
+{% if user.is_staff %}
+<a href="{% url 'approve_event' event_id=event.id %}" class="btn btn-primary confirm">Approve</a>
+<a href="{% url 'deny_event' event_id=event.id %}" class="btn btn-primary confirm">Deny</a>
+{% endif %}
+
+
+<script type="text/javascript">
+$(".confirm").click(function(e){
+    e.preventDefault();
+    var url = $(this).attr("href");
+    var msg = $(this).attr("data-msg");
+    if (!msg){
+        msg = "Are you sure?"
+    }
+    bootbox.confirm(msg, function(result){
+        if(result){
+            LoadAjaxContent(url);
+        }
+    });
+});
+</script>

@@ -34,6 +34,9 @@ class Event(models.Model):
     def location(self):
         return self.reservation.location
 
+    def status(self):
+        return self.reservation.status
+
     def is_free(self):
         if self.student_fee == 0 and self.staff_fee == 0 and self.public_fee == 0:
             return True

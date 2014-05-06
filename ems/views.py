@@ -163,7 +163,7 @@ def edit_event(request, event_id, template_name="ajax/edit_event.html"):
 @login_required
 def delete_event(request, event_id):
     """
-    Delete an event
+    Delete an event and its reservation
     """
     event = get_object_or_404(Event, pk=event_id)
     reservation = event.reservation
@@ -173,27 +173,49 @@ def delete_event(request, event_id):
             event.delete()
     return redirect('my_events')
 
-#--------------------NOT IMPLEMENTED---------------------------
 
 
 # Mod powers 
 
 @login_required
-def pending_events(request, template_name=""):
+def pending_events(request, template_name="ajax/pending_events.html"):
     """
     View all events that need approval/denial
     """
-    return
+    if not request.user.is_staff:
+        raise Http404
+    pending_list = Event.objects.filter(reservation__status=status_const.PENDING)
+    return render(request, template_name, {'pending_list': pending_list})
+
 
 @login_required
 def approve_event(request, event_id):
-    return #should redirect 
+    """
+    Set the status of an event reservation to 'approved' and redirect to pending events page
+    """
+    if not request.user.is_staff:
+        raise Http404
+    event = get_object_or_404(Event, pk=event_id)
+    event.reservation.status = status_const.APPROVED
+    event.reservation.save()
+    return redirect('pending_events') 
 
 
 @login_required
 def deny_event(request, event_id):
-    return #should redirect 
+    """
+    Set the status of an event reservation to 'denied' and redirect to pending events page
+    """
+    if not request.user.is_staff:
+        raise Http404
+    event = get_object_or_404(Event, pk=event_id)
+    event.reservation.status = status_const.DENIED
+    event.reservation.save()
+    return redirect('pending_events')
 
+
+
+#--------------------NOT IMPLEMENTED---------------------------
 
 # For extra 4 queries given by professor
 @login_required

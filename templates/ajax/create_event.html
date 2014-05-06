@@ -147,7 +147,7 @@
                 success: function(data) {
                     window.location.hash = frm.attr('data-redirect')
                     $('#ajax-content').html(data);
-                    AjaxContentLinks();
+                    $('#ajax-content .ajax-link').click( AjaxContentLink );
                 },
                 error: function(data) {
                     $('#ajax-error').html('Form could not be submitted.');

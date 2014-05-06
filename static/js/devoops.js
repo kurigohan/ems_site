@@ -28,20 +28,7 @@ function LoadCalendarScript(callback){
 		LoadFullCalendarScript();
 	}
 }
-//
-// Dynamically load  OpenStreetMap Plugin
-// homepage: http://openlayers.org
-//
-function LoadOpenLayersScript(callback){
-	if (!$.fn.OpenLayers){
-		$.getScript('http://www.openlayers.org/api/OpenLayers.js', callback);
-	}
-	else {
-		if (callback && typeof(callback) === "function") {
-			callback();
-		}
-	}
-}
+
 //
 //  Dynamically load  jQuery Timepicker plugin
 //  homepage: http://trentrichardson.com/examples/timepicker/
@@ -157,7 +144,7 @@ function LoadAjaxContent(url){
 			$('#ajax-content').html(data);
 			$('.preloader').hide();
 			// Activate any ajax link in the new ajax page
-			AjaxContentLinks();
+			$('#ajax-content .ajax-link').click( AjaxContentLink );
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			alert(errorThrown);
@@ -168,19 +155,18 @@ function LoadAjaxContent(url){
 }
 
 
-function AjaxContentLinks(){
-	$('#ajax-content .ajax-link').click( function (e) {
-		e.preventDefault();
-		var url;
-		if($(this).is('tr')){
-			url = $(this).attr('data-href');
-		}
-		else{
-			url = $(this).attr('href');
-		}
-		window.location.hash = url;
-		LoadAjaxContent(url);
-	});
+function AjaxContentLink( e ){
+	e.preventDefault();
+	var url;
+	if($(this).is('tr')){
+		url = $(this).attr('data-href');
+	}
+	else{
+		url = $(this).attr('href');
+	}
+	window.location.hash = url;
+	LoadAjaxContent(url);
+
 }
 
 //

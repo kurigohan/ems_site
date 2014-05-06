@@ -30,24 +30,6 @@
                         </div>
                         <div class="col-xs-4 col-sm-8 top-panel-right">
                             <ul class="nav navbar-nav pull-right panel-menu">
-                            <!--    <li class="hidden-xs">
-                                    <a href="index.html" class="modal-link">
-                                        <i class="fa fa-bell"></i>
-                                        <span class="badge">7</span>
-                                    </a>
-                                </li>
-                                <li class="hidden-xs">
-                                    <a class="ajax-link" href="ajax/calendar.html">
-                                        <i class="fa fa-calendar"></i>
-                                        <span class="badge">7</span>
-                                    </a>
-                                </li>
-                                <li class="hidden-xs">
-                                    <a href="ajax/page_messages.html" class="ajax-link">
-                                        <i class="fa fa-envelope"></i>
-                                        <span class="badge">7</span>
-                                    </a>
-                                </li>-->
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle account" data-toggle="dropdown">
                                         <div class="avatar">
@@ -107,7 +89,7 @@
                     </li>
                     <li>
                         <a href="{% url 'my_events' %}" class="ajax-link">
-                            <i class="fa fa-exclamation"></i>
+                            <i class="fa fa-thumb-tack"></i>
                             <span class="hidden-xs">My Events</span>
                         </a>
                         <!--<ul class="dropdown-menu">
@@ -123,7 +105,15 @@
                     </li>
 
                     <hr/>
-
+                    {% if user.is_staff %}
+                    <!-- MOD OPTIONS -->
+                    <li>
+                        <a href="{% url 'pending_events' %}" class="ajax-link">
+                            <i class="fa fa-clock-o"></i>
+                            <span class="hidden-xs">Pending Events</span>
+                        </a>
+                    </li>
+                    {% endif %}
                     <li>
                         <a href="{% url 'query' %}" class="ajax-link">
                             <i class="fa fa-bolt"></i>
@@ -141,9 +131,6 @@
                <div class="preloader">
                     <img src="{% static 'img/devoops_getdata.gif' %}" class="devoops-getdata" alt="preloader"/>
                 </div>
-
-        
-
             {% endblock %}
 
                 </div>
@@ -163,6 +150,7 @@
     <script src="{% static 'plugins/moment/moment.min.js' %}"></script>
     <script src="{% static 'plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js' %}"></script>
     <script src="{% static 'plugins/bootstrap-touchspin/bootstrap.touchspin.js' %}"></script>
+    <script src="{% static 'plugins/bootbox/bootbox.min.js' %}"></script>
         {% block js %}{% endblock %}
     <!-- All functions for this theme + document.ready processing -->
     <script src="{% static 'js/devoops.js' %}"></script>

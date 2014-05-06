@@ -30,5 +30,17 @@
         <td>{{event.start.date}} - {{event.end.date}}</td>
         {% endif %}
     </tr>
+    <tr>
+        <td>Creator: </td>
+        {% if event.start.date == event.end.date %}
+        <td>{{event.creator.username}}</td>
+    </tr>
+    {% if event.creator == user %}
+    <tr>
+        <td>Status: </td>
+        {% if event.start.date == event.end.date %}
+        <td>{{event.status}}</td>
+    </tr>
+    {% endif %}
 </table>
 {% endblock %}

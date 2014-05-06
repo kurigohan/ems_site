@@ -1,18 +1,7 @@
-
-{% load staticfiles %}
-
-<!--
-    <div class="event-navbar  container-fluid">
-      <span class="navbar-brand no-click">Event Management</span>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="#" class="btn btn-default"><strong>Create Event</strong></a></li>
-        </ul>
-    </div>
--->
 <div class="box">
     <div class="box-header">
         <div class="box-name">
-            <span>My Events</span>
+            <span>Pending Events</span>
         </div>
         <div class="box-icons">
             <a href="{% url 'create_event' %}" class="ajax-link" title="Add a new event">
@@ -38,7 +27,7 @@
             </thead>
             <tbody>
             <!-- Start: list_row -->
-            {% for event in event_list %}
+            {% for event in pending_list %}
 
                 <tr  data-href="{{event.get_absolute_url}}" class="ajax-link row-link">
                     <td>{{event.name}}</td>
@@ -56,10 +45,7 @@
                     <td>{{event.status}}</td>
                 </tr>
 
-
-
-            {% endfor %}
-            
+            {% endfor %}            
             <!-- End: list_row -->
             </tbody>
             
