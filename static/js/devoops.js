@@ -341,7 +341,7 @@ $(document).ready(function () {
 	});
 	var ajax_url = location.hash.replace(/^#/, '');
 	if (ajax_url.length < 1) {
-		ajax_url = "/home/";
+		ajax_url = "/my_events/";
 	}
 	LoadAjaxContent(ajax_url);
 	$('.main-menu').on('click', 'a', function (e) {

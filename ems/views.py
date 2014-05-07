@@ -18,14 +18,6 @@ def dashboard(request, template_name='base.html'):
     """
     return render(request, template_name, {'user':request.user})
 
-@login_required
-def home(request, template_name='ajax/home.html'):
-    """
-    Displays AJAX home page
-    """
-    return render(request, template_name, {'user':request.user})
-
-
 
 # --------------------- User Login/Registration ---------------------------
 @login_required
