@@ -214,15 +214,15 @@ def deny_event(request, event_id):
     return redirect('pending_events')
 
 
-
-#--------------------NOT IMPLEMENTED---------------------------
-
-# For extra 4 queries given by professor
 @login_required
-def summary_report(request, template_name=""):
-    return
-
-#--------------------------------------------------------------------------
+def summary_report(request, template_name="ajax/summary_report.html"):
+    """
+    View summary report of events
+    """
+    if not request.user.is_staff:
+        raise Http404
+    
+    return render(request, template_name, {})
 
 
 @login_required

@@ -23,5 +23,5 @@ urlpatterns = patterns('',
     url(r'^pending_events/$', views.pending_events, name='pending_events'),
     url(r'^event/approve/(?P<event_id>\d+)/$', views.approve_event, name="approve_event"),
     url(r'^event/deny/(?P<event_id>\d+)/$', views.deny_event, name="deny_event"),
-    url(r'^query/$', views.query, name='query'),
+    url(r'^summary_report/$', views.summary_report, name='summary_report'),
 )

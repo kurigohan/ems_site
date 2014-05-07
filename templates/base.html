@@ -104,23 +104,22 @@
         
                     </li>
 
-                    <hr/>
                     {% if user.is_staff %}
                     <!-- MOD OPTIONS -->
+                    <hr/>
                     <li>
                         <a href="{% url 'pending_events' %}" class="ajax-link">
                             <i class="fa fa-clock-o"></i>
                             <span class="hidden-xs">Pending Events</span>
                         </a>
                     </li>
-                    {% endif %}
                     <li>
-                        <a href="{% url 'query' %}" class="ajax-link">
-                            <i class="fa fa-bolt"></i>
-                             <span class="hidden-xs">Query</span>
+                        <a href="{% url 'summary_report' %}" class="ajax-link">
+                            <i class="fa fa-bar-chart-o"></i>
+                             <span class="hidden-xs">Summary Report</span>
                         </a>
                     </li>
-                    
+                    {% endif %}
                 </ul>
             </div>
             <!--Start Content-->
