@@ -102,7 +102,7 @@ class ReservationEditForm(forms.ModelForm):
 
 
 class SummaryReportForm(forms.Form):
-    week_start_datetime = forms.DateTimeField(label='Week Starting Date/Time',  widget=forms.DateTimeInput(attrs={'class':'form-control ', 'placeholder':'mm/dd/yy hh:mm'}))
+    week_start_datetime = forms.DateTimeField(label='Week Starting Date/Time',  widget=forms.DateTimeInput(attrs={'class':'form-control ', 'placeholder':'mm/dd/yy'}))
 
 class QueryForm(forms.Form):
 	query = forms.CharField(label='SQL SELECT Statement', widget=forms.Textarea(attrs={'class':'form-control '}))
