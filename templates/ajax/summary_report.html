@@ -1,5 +1,5 @@
 
-<h2 class="page-header">Summary Report</h2>
+<h2 class="page-header">Summary Report - Weekly</h2>
 <br>
 <table class="table table-striped">
     <tr>
@@ -19,3 +19,53 @@
         <td>{{prepayment}}</td>
     </tr>
 </table>
+<br/>
+<form method='post' action="{% url 'summary_report' %}" role="form" class="form-horizontal" id="ajax-form" data-redirect="{{redirect_url}}">{% csrf_token %}
+<div class="form-group">
+    <label for="inputDate" class="col-sm-2 control-label">Week Of:</label>
+    <div class="col-sm-3">
+      {{ form.week_start_datetime.errors }}
+     <div class="input-group date datetimepicker">
+        {{form.week_start_datetime}}
+    </div>
+    </div>
+    <div class="col-sm-3">
+      <button type="submit" class="btn btn-default">Update</button>
+    </div>
+  </div>
+</form>
+(Default: Current Time to Current Time + 1 Week)
+
+<script type="text/javascript">
+   $(function() { 
+        var datetime_format = 'MM/DD/YY HH:mm';
+
+        $('.datetimepicker').datetimepicker({format: datetime_format});
+
+        $("input[type='number']").TouchSpin({
+            min: 0,
+            max: 9999,
+            stepinterval: 1,
+            decimals: 2,
+            prefix: '$'
+        });
+
+       var frm = $('#ajax-form');
+        frm.submit( function() {
+            $.ajax({
+                type: frm.attr('method'),
+                url: frm.attr('action'),
+                data: frm.serialize(),
+                success: function(data) {
+                    window.location.hash = frm.attr('data-redirect')
+                    $('#ajax-content').html(data);
+                    $('#ajax-content .ajax-link').click( AjaxContentLink );
+                },
+                error: function(data) {
+                    $('#ajax-error').html('Form could not be submitted.');
+                }
+            });
+            return false;
+        });
+    });
+</script>

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404, HttpResponse
 from django.core.urlresolvers import reverse
@@ -7,7 +9,7 @@ from django.contrib.auth.models import User
 from django.db import transaction, IntegrityError, connection
 from django.contrib import messages
 
-from ems.forms import RegistrationForm, EventCreationForm, EventEditForm, ReservationEditForm, QueryForm
+from ems.forms import RegistrationForm, EventCreationForm, EventEditForm, ReservationEditForm, QueryForm, SummaryReportForm
 from ems.models import Event, Reservation, Location, Approval, Attendance
 from ems import status_const # constants for reservation status
 
@@ -213,8 +215,16 @@ def summary_report(request, template_name="ajax/summary_report.html"):
     """
     if not request.user.is_staff:
         raise Http404
-    
-    return render(request, template_name, {})
+
+    week_start_datetime = datetime.now()
+
+    if request.method == 'POST':
+        submitted_form = SummaryReportForm(request.POST)
+        if submitted_form.is_valid():
+            week_start_datetime = submitted_form.cleaned_data['week_start_datetime']
+
+    form = SummaryReportForm()
+    return render(request, template_name, {'form':form})
 
 
 @login_required

@@ -99,10 +99,14 @@ class ReservationEditForm(forms.ModelForm):
         model = Reservation
         fields = ('location', 'start_datetime', 'end_datetime')
 
-class QueryForm(forms.Form):
-    query = forms.CharField(label='SQL SELECT Statement', widget=forms.Textarea(attrs={'class':'form-control '}))
 
-    def clean(self):
-        if self.cleaned_data['query'][:6].lower() != 'select':
-            raise forms.ValidationError("The query must be a SELECT statement.")
-        return self.cleaned_data
+class SummaryReportForm(forms.Form):
+    week_start_datetime = forms.DateTimeField(label='Week Starting Date/Time',  widget=forms.DateTimeInput(attrs={'class':'form-control ', 'placeholder':'mm/dd/yy hh:mm'}))
+
+class QueryForm(forms.Form):
+	query = forms.CharField(label='SQL SELECT Statement', widget=forms.Textarea(attrs={'class':'form-control '}))
+
+	def clean(self):
+	    if self.cleaned_data['query'][:6].lower() != 'select':
+	        raise forms.ValidationError("The query must be a SELECT statement.")
+	    return self.cleaned_data
