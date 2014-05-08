@@ -231,11 +231,12 @@ def summary_report(request, template_name="ajax/summary_report.html"):
 
     week_end_datetime = week_start_datetime + timedelta(days=7)
 
-    event_count = Event.objects.filter(reservation__status=status_const.APPROVED, reservation__start_datetime__gte=week_start_datetime, reservation__start_datetime__lte=week_end_datetime).count()
+    total_event_count = Event.objects.filter(reservation__start_datetime__gte=week_start_datetime, reservation__start_datetime__lte=week_end_datetime).count()
+    approved_event_count = Event.objects.filter(reservation__status=status_const.APPROVED, reservation__start_datetime__gte=week_start_datetime, reservation__start_datetime__lte=week_end_datetime).count()
     attendance = Attendance.objects.filter(event__reservation__start_datetime__gte=week_start_datetime, event__reservation__start_datetime__lte=week_end_datetime).count()
 
     form = SummaryReportForm()
-    return render(request, template_name, {'form':form, 'event_count':event_count, 'attendance':attendance})
+    return render(request, template_name, {'form':form, 'total_event_count':total_event_count, 'approved_event_count':approved_event_count, 'attendance':attendance})
 
 
 @login_required
