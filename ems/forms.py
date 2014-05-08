@@ -100,7 +100,6 @@ class ReservationEditForm(forms.ModelForm):
         model = Reservation
         fields = ('location', 'start_datetime', 'end_datetime')
 
-
 class SummaryReportForm(forms.Form):
     week_start_datetime = forms.DateTimeField(label='Week Starting Date/Time',  widget=forms.DateTimeInput(attrs={'class':'form-control ', 'placeholder':'mm/dd/yy hh:mm'}))
 

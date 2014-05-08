@@ -238,10 +238,57 @@ def summary_report(request, template_name="ajax/summary_report.html"):
     revenue = 0
 
     for currentAttendance in attendance:
-    	revenue = revenue + currentAttendance.event.student_fee
+        revenue = revenue + currentAttendance.event.student_fee
 
     form = SummaryReportForm()
     return render(request, template_name, {'form':form, 'total_event_count':total_event_count, 'approved_event_count':approved_event_count, 'attendance_count':attendance_count, 'revenue':revenue})
+
+@login_required
+def attend(request, event_id):
+    """
+    Register to attend an event
+    """
+    event = get_object_or_404(Event, pk=event_id)
+
+    user_register_count = Attendance.objects.filter(user=request.user, event=event).count()
+
+    if user_register_count != 0:
+        return redirect('event_details', event_id=event_id)
+
+    timestamp = datetime.now()
+    timestamp = timestamp.replace(tzinfo=timezone.utc)
+
+    attendance = Attendance(user=request.user,
+                    event=event, 
+                    prepaid=False,
+                    date_registered=timestamp)
+    attendance.save()
+    return redirect('event_details', event_id=event_id)
+
+@login_required
+def prepay(request, event_id):
+    """
+    Prepay to attend an event
+    """
+    event = get_object_or_404(Event, pk=event_id)
+
+    if not event.can_prepay:
+        return redirect('event_details', event_id=event_id)
+
+    user_register_count = Attendance.objects.filter(user=request.user, event=event).count()
+
+    if user_register_count != 0:
+        return redirect('event_details', event_id=event_id)
+
+    timestamp = datetime.now()
+    timestamp = timestamp.replace(tzinfo=timezone.utc)
+
+    attendance = Attendance(user=request.user,
+                    event=event, 
+                    prepaid=True,
+                    date_registered=timestamp)
+    attendance.save()
+    return redirect('event_details', event_id=event_id)
 
 
 @login_required

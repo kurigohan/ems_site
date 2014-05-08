@@ -80,6 +80,11 @@
 <a href="{% url 'deny_event' event_id=event.id %}" class="btn btn-primary confirm">Deny</a>
 {% endif %}
 
+<a href="{% url 'attend' event_id=event.id %}" class="btn btn-primary confirm">Attend</a>
+{% if event.prepay %}
+<a href="{% url 'prepay' event_id=event.id %}" class="btn btn-primary confirm">Prepay</a>
+{% endif %}
+
 {% if attendance_list %}
 <hr>
     {% if event.can_prepay %}
