@@ -1,4 +1,5 @@
-from datetime import datetime
+from datetime import datetime, timedelta
+from django.utils import timezone
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404, HttpResponse
@@ -221,14 +222,20 @@ def summary_report(request, template_name="ajax/summary_report.html"):
         raise Http404
 
     week_start_datetime = datetime.now()
+    week_start_datetime = week_start_datetime.replace(tzinfo=timezone.utc)
 
     if request.method == 'POST':
         submitted_form = SummaryReportForm(request.POST)
         if submitted_form.is_valid():
             week_start_datetime = submitted_form.cleaned_data['week_start_datetime']
 
+    week_end_datetime = week_start_datetime + timedelta(days=7)
+
+    event_count = Event.objects.filter(reservation__status=status_const.APPROVED, reservation__start_datetime__gte=week_start_datetime, reservation__start_datetime__lte=week_end_datetime).count()
+    attendance = Attendance.objects.filter(event__reservation__start_datetime__gte=week_start_datetime, event__reservation__start_datetime__lte=week_end_datetime).count()
+
     form = SummaryReportForm()
-    return render(request, template_name, {'form':form})
+    return render(request, template_name, {'form':form, 'event_count':event_count, 'attendance':attendance})
 
 
 @login_required
