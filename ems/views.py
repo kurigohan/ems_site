@@ -233,10 +233,15 @@ def summary_report(request, template_name="ajax/summary_report.html"):
 
     total_event_count = Event.objects.filter(reservation__start_datetime__gte=week_start_datetime, reservation__start_datetime__lte=week_end_datetime).count()
     approved_event_count = Event.objects.filter(reservation__status=status_const.APPROVED, reservation__start_datetime__gte=week_start_datetime, reservation__start_datetime__lte=week_end_datetime).count()
-    attendance = Attendance.objects.filter(event__reservation__start_datetime__gte=week_start_datetime, event__reservation__start_datetime__lte=week_end_datetime).count()
+    attendance = Attendance.objects.filter(event__reservation__start_datetime__gte=week_start_datetime, event__reservation__start_datetime__lte=week_end_datetime)
+    attendance_count = attendance.count()
+    revenue = 0
+
+    for currentAttendance in attendance:
+    	revenue = revenue + currentAttendance.event.student_fee
 
     form = SummaryReportForm()
-    return render(request, template_name, {'form':form, 'total_event_count':total_event_count, 'approved_event_count':approved_event_count, 'attendance':attendance})
+    return render(request, template_name, {'form':form, 'total_event_count':total_event_count, 'approved_event_count':approved_event_count, 'attendance_count':attendance_count, 'revenue':revenue})
 
 
 @login_required
