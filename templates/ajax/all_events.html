@@ -40,8 +40,14 @@
                     <td>{{reservation.event.name}}</td>
                     <td>{{reservation.event.category}}</td>
                     <td> {{reservation.event.description_short}} </td>
-                    <td>{{reservation.start_datetime.date}}</td>
-                    <td>{{reservation.start_datetime.time}}</td>
+                    <td>
+                    {% if reservation.start_datetime.date == reservation.end_datetime.date %}
+                        {{reservation.start_datetime.date}}
+                    {% else %}
+                        {{reservation.start_datetime.date}} - {{reservation.end_datetime.date}}
+                    {% endif %}
+                    </td>
+                    <td>{{reservation.start_datetime.time}} - {{reservation.end_datetime.time}}</td>
                     <td>{{reservation.location}}</td>
                 </tr>
 
