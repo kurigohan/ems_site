@@ -2375,6 +2375,15 @@ td.beauty-hover {
 .table-borderless td{
     border: none !important;
 }
+
+td.approved {
+  color: green;
+}
+
+td.denied {
+  color: red;
+}
+
 /*
 .event-navbar {
   position: relative;

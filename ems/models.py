@@ -23,7 +23,7 @@ class Event(models.Model):
     student_fee = models.DecimalField(max_digits=4, decimal_places=2, default=0)
     staff_fee = models.DecimalField(max_digits=4, decimal_places=2, default=0)
     public_fee = models.DecimalField(max_digits=4, decimal_places=2, default=0)
-
+    prepay = models.BooleanField(default=False)
 
     def start(self):
         return self.reservation.start_datetime
@@ -47,6 +47,14 @@ class Event(models.Model):
         if self.student_fee == 0 and self.staff_fee == 0 and self.public_fee == 0:
             return True
         return False
+    def can_prepay(self):
+        if self.prepay:
+            return "Yes"
+        return "No"
+    def access(self):
+        if self.is_public:
+            return "Public"
+        return "Private"
 
     def __unicode__(self):
         return self.name
@@ -82,6 +90,19 @@ class Approval(models.Model):
     reservation = models.OneToOneField(Reservation)
     date = models.DateTimeField()
 
+    def __unicode__(self):
+        return '%s - %s - %s' % (self.approver.username, self.event, self.date)
+
 class Attendance(models.Model):
     user = models.ForeignKey(User)
     event = models.ForeignKey(Event)
+    prepaid = models.BooleanField(default=False)
+    date_registered = models.DateTimeField()
+
+    def is_prepaid(self):
+        if self.prepaid:
+            return "Yes"
+        return "No"
+        
+    def __unicode__(self):
+        return '%s - %s - %s' % (self.user.username, self.event, self.date_registered)

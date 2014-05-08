@@ -73,6 +73,7 @@ def all_events(request, template_name="ajax/all_events.html"):
     View all approved events/reservations
     """
     reservation_list = Reservation.objects.filter(status=status_const.APPROVED)
+
     return render(request, template_name, {'reservation_list':reservation_list})
 
 @login_required
@@ -94,6 +95,7 @@ def create_event(request, template_name="ajax/create_event.html"):
             student_fee = form.cleaned_data['student_fee']
             staff_fee = form.cleaned_data['staff_fee']
             public_fee = form.cleaned_data['public_fee']
+            prepay = form.cleaned_data['prepay']
 
             try:
                 with transaction.atomic():
@@ -104,7 +106,8 @@ def create_event(request, template_name="ajax/create_event.html"):
                                         is_public=is_public,
                                         student_fee=student_fee,
                                         staff_fee=staff_fee,
-                                        public_fee=public_fee)
+                                        public_fee=public_fee,
+                                        prepay=prepay)
                     event.save()
                     reservation = Reservation(event=event,
                                                 location=location,
@@ -126,7 +129,8 @@ def event_details(request, event_id, template_name="ajax/event_details.html"):
     View event and reservation details
     """
     event = get_object_or_404(Event, pk=event_id)
-    return render(request, template_name, {'event':event})
+    attendance_list = Attendance.objects.filter(event_id=event.id)
+    return render(request, template_name, {'event':event, 'attendance_list':attendance_list})
 
 
 
@@ -236,11 +240,3 @@ def location_details(request, loc_id, template_name="ajax/location_details.html"
     reservation_list = Reservation.objects.filter(status=status_const.APPROVED, location=location.id)
     return render(request, template_name, {'location':location, 'reservation_list':reservation_list})
 
-
-@login_required
-def query(request, template_name="ajax/query.html"):
-    """
-    Query the database
-    """
-    form = QueryForm()
-    return render(request, template_name, {'form':form})

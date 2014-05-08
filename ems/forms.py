@@ -76,7 +76,7 @@ class EventCreationForm(forms.Form):
     student_fee = forms.DecimalField(max_digits=4, decimal_places=2, widget=forms.NumberInput(attrs={'value':'0'}))
     staff_fee = forms.DecimalField(max_digits=4, decimal_places=2, widget=forms.NumberInput(attrs={'value':'0'}))
     public_fee = forms.DecimalField(max_digits=4, decimal_places=2, widget=forms.NumberInput(attrs={'value':'0'}))
-
+    prepay = forms.BooleanField(label='Can Pre-pay', required=False)
 
 class EventEditForm(forms.ModelForm):
     name = forms.CharField(label='Name', max_length=255, widget=forms.TextInput(attrs={'class':'form-control '}))
@@ -86,10 +86,11 @@ class EventEditForm(forms.ModelForm):
     student_fee = forms.DecimalField(max_digits=4, decimal_places=2)
     staff_fee = forms.DecimalField(max_digits=4, decimal_places=2)
     public_fee = forms.DecimalField(max_digits=4, decimal_places=2)
+    prepay = forms.BooleanField(label='Can Pre-pay', required=False)
 
     class Meta:
         model = Event
-        fields = ('name', 'category', 'description', 'is_public', 'student_fee', 'staff_fee', 'public_fee')
+        fields = ('name', 'category', 'description', 'is_public', 'student_fee', 'staff_fee', 'public_fee', 'prepay')
 
 class ReservationEditForm(forms.ModelForm):
     location =  forms.ModelChoiceField(queryset=Location.objects.all(), widget=forms.Select(attrs={'class':'form-control',} ),)

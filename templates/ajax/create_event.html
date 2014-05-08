@@ -3,24 +3,20 @@
 <form method='post' action="{% url 'create_event' %}" role="form" id="ajax-form" data-redirect="{{redirect_url}}">{% csrf_token %}
     <p>
         <label>{{ form.name.label }}:</label>
-        {{ form.name.errors }}
         {{ form.name }}
     </p>
     <p>
         <label>{{ form.category.label }}:</label>
-        {{ form.category.errors }}
         {{ form.category }}
     </p>
 
     <p>
         <label>{{ form.description.label }}:</label>
-        {{ form.description.errors }} 
         {{ form.description }}
     </p>
 
     <p>
      <label>{{ form.location.label }}:</label>
-        {{ form.location.errors }}
         {{ form.location }}
     </p>
 
@@ -33,7 +29,6 @@
                     <label for="id_start_datetime">Start Date/Time:</label> 
                 </td>
                 <td>
-                {{ form.start_datetime.errors }}
                  <div class="input-group date datetimepicker">
                     {{form.start_datetime}}
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calender"></span></span>
@@ -49,7 +44,6 @@
                     <label for="id_end_datetime">End Date/Time:</label> 
                 </td>
                 <td>
-                {{ form.end_datetime.errors }}
                  <div class="input-group date datetimepicker">
                     {{form.end_datetime}}
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calender"></span></span>
@@ -59,56 +53,70 @@
         </table>
         </div>
     </div>
-    
-
-
-     <!-- Prices -->
-     <div class="row">
-         <div class="col-sm-4">
-            <table class="table table-condensed table-borderless">
-                 <tr>
-                     <td>
-                        <label>Student:</label>
-                     </td>
-                     <td>
-                         {{form.student_fee.errors}}
-                         {{form.student_fee}}
-                     </td>
-                 </tr>
-             </table>
-         </div>
-         <div class="col-sm-4">
-            <table class="table table-condensed table-borderless">
-                 <tr>
-                     <td>
-                        <label>Staff:</label>
-                     </td>
-                     <td>
-                         {{form.staff_fee.errors}}
-                         {{form.staff_fee}}
-                     </td>
-                 </tr>
-             </table>
-         </div>
-         <div class="col-sm-4">
-            <table class="table table-condensed table-borderless">
-                 <tr>
-                     <td>
-                        <label>Public:</label>
-                     </td>
-                     <td>
-                         {{form.public_fee.errors}}
-                         {{form.public_fee}}
-                     </td>
-                 </tr>
-             </table>
-        </div>
-     </div>
-    <!-- End Prices -->
     <p>
      <label>{{ form.is_public.label }}: </label>
         {{ form.is_public }}
     </p>   
+
+    <p>
+    <label for="free">Free?</label> 
+
+        <label>
+            <input type="radio" name="free" value="Yes" checked>Yes
+        </label>
+        <label>
+            <input type="radio" name="free" value="No">No
+        </label>
+        </p>
+     <!-- Prices -->
+     <div id="prices-div"  style="display:none;">
+         <p>
+            <label>Can prepay?</label>
+            {{form.prepay}}
+         </p>
+         <div class="row">
+             <div class="col-sm-4">
+                <table class="table table-condensed table-borderless">
+                     <tr>
+                         <td>
+                            <label>Student:</label>
+                         </td>
+                         <td>
+                             {{form.student_fee}}
+                         </td>
+                     </tr>
+                 </table>
+             </div>
+             <div class="col-sm-4">
+                <table class="table table-condensed table-borderless">
+                     <tr>
+                         <td>
+                            <label>Staff:</label>
+                         </td>
+                         <td>
+                             {{form.staff_fee}}
+                         </td>
+                     </tr>
+                 </table>
+             </div>
+             <div class="col-sm-4">
+                <table class="table table-condensed table-borderless">
+                     <tr>
+                         <td>
+                            <label>Public:</label>
+                         </td>
+                         <td>
+                             {{form.public_fee}}
+                         </td>
+                     </tr>
+                 </table>
+            </div>
+         </div>
+
+     </div>
+    <!-- End Prices -->
+
+
     <hr>
     <input class="btn btn-primary" type="submit" value="Create  Event"/>
 
@@ -116,6 +124,7 @@
 <p id="ajax-error"></p>
 {% if messages %}
 <ul>
+
 {% for message in messages %}
     <li>{{ message }}</li>
 {% endfor %}
@@ -136,6 +145,10 @@
             stepinterval: 1,
             decimals: 2,
             prefix: '$'
+        });
+
+        $('input[type="radio"]').click(function(){
+            $('#prices-div').slideToggle();
         });
 
         var frm = $('#ajax-form');

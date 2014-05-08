@@ -32,28 +32,33 @@
     </tr>
     <tr>
         <td>Accessibility: </td>
-        <td>
-        {% if event.is_public %}
-        public
-        {% else %}
-        private
-        {% endif %}
-        </td>
+        <td> {{event.access}}</td>
     </tr>
+
+    {% if event.is_free %}
+    <tr>
+        <td>Admission: </td>
+        <td>Free</td>
+    </tr>
+
+    {% else %}
     <tr>
         <td>Admission: </td>
         <td>
-        {% if event.is_free %}
-            Free
-        {% else %}
-            Student ${{event.student_fee}} | Staff ${{event.staff_fee}} | Public ${{event.public_fee}}</td>
-        {% endif %}
+            Student ${{event.student_fee}} | Staff ${{event.staff_fee}} | Public ${{event.public_fee}}
+        </td>
     </tr>
+    <tr>
+        <td>Can Prepay? </td>
+        <td>{{event.can_prepay}}</td>
+    </tr>
+    {% endif %}
+
     <!-- Show event status if user created the event, otherwise show the creator's username -->
     {% if event.creator == user %}
     <tr>
         <td>Status: </td>
-        <td>{{event.status}}</td>
+        <td class="{{event.status.lower}}">{{event.status}}</td>
     </tr>
     {% else %}
     <tr>
@@ -61,6 +66,8 @@
         <td>{{event.creator.username}}</td>
     </tr>
     {% endif %}
+
+
 </table>
 
 {% if user == event.creator %}
@@ -71,6 +78,15 @@
 {% if user.is_staff %}
 <a href="{% url 'approve_event' event_id=event.id %}" class="btn btn-primary confirm">Approve</a>
 <a href="{% url 'deny_event' event_id=event.id %}" class="btn btn-primary confirm">Deny</a>
+{% endif %}
+
+{% if attendance_list %}
+<hr>
+    {% if event.can_prepay %}
+        {% include 'include/prepaid_attendance_table.html' %}
+    {% else %}
+        {% include 'include/attendance_table.html' %}
+    {% endif %}
 {% endif %}
 
 
