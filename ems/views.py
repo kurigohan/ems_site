@@ -11,7 +11,7 @@ from django.db import transaction, IntegrityError, connection
 from django.contrib import messages
 
 from ems.forms import RegistrationForm, EventCreationForm, EventEditForm, ReservationEditForm, QueryForm, SummaryReportForm
-from ems.models import Event, Reservation, Location, Approval, Attendance
+from ems.models import Event, Reservation, Location, Approval, Attendance, Category
 from ems import status_const # constants for reservation status
 
 @login_required
@@ -240,7 +240,25 @@ def summary_report(request, template_name="ajax/summary_report.html"):
 
     for currentAttendance in attendance:
         revenue = revenue + currentAttendance.event.student_fee
-    return render(request, template_name, {'form':form, 'total_event_count':total_event_count, 'approved_event_count':approved_event_count, 'attendance_count':attendance_count, 'revenue':revenue})
+
+    categories = Category.objects.all()
+
+    category_registration = {}
+    category_prepay = {}
+
+    for current_category in categories:
+        category_registration[current_category.name] = Attendance.objects.filter(event__category=current_category, event__reservation__start_datetime__gte=week_start_datetime, event__reservation__start_datetime__lte=week_end_datetime).count()
+        category_prepay[current_category.name] = Attendance.objects.filter(prepaid=True, event__category=current_category, event__reservation__start_datetime__gte=week_start_datetime, event__reservation__start_datetime__lte=week_end_datetime).count()
+
+    category_payment_data = {}
+
+    for current_category in category_registration:
+        current_category_percent_prepay = 0
+        if category_registration[current_category] != 0:
+            current_category_percent_prepay = category_prepay[current_category]/float(category_registration[current_category])*100
+        category_payment_data[current_category] = (category_registration[current_category], category_prepay[current_category], current_category_percent_prepay)
+
+    return render(request, template_name, {'form':form, 'total_event_count':total_event_count, 'approved_event_count':approved_event_count, 'attendance_count':attendance_count, 'revenue':revenue, 'category_payment_data':category_payment_data})
 
 @login_required
 def attend(request, event_id):
