@@ -85,14 +85,24 @@
 <a href="{% url 'prepay' event_id=event.id %}" class="btn btn-primary confirm">Prepay</a>
 {% endif %}
 
+{% if messages %}
+<ul>
+{% for message in messages %}
+    <li>{{ message }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+
+
 {% if attendance_list %}
-<hr>
     {% if event.can_prepay %}
         {% include 'include/prepaid_attendance_table.html' %}
     {% else %}
         {% include 'include/attendance_table.html' %}
     {% endif %}
 {% endif %}
+
+
 
 
 <script type="text/javascript">

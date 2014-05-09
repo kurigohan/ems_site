@@ -252,6 +252,7 @@ def attend(request, event_id):
     user_register_count = Attendance.objects.filter(user=request.user, event=event).count()
 
     if user_register_count != 0:
+        messages.error(request, "Error: You are already attending this event.")
         return redirect('event_details', event_id=event_id)
 
     timestamp = datetime.now()
@@ -272,11 +273,13 @@ def prepay(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
 
     if not event.can_prepay:
+        messages.error(request, "Error: Pre-payments are not accepted.")
         return redirect('event_details', event_id=event_id)
 
     user_register_count = Attendance.objects.filter(user=request.user, event=event).count()
 
     if user_register_count != 0:
+        messages.error(request, "Error: User has already prepaid for this event.")
         return redirect('event_details', event_id=event_id)
 
     timestamp = datetime.now()
@@ -299,4 +302,3 @@ def location_details(request, loc_id, template_name="ajax/location_details.html"
     location = get_object_or_404(Location, pk=loc_id)
     reservation_list = Reservation.objects.filter(status=status_const.APPROVED, location=location.id)
     return render(request, template_name, {'location':location, 'reservation_list':reservation_list})
-
