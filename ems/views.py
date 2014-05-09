@@ -292,8 +292,8 @@ def attend(request, event_id):
         messages.error(request, "Error: You are already attending this event.")
         return redirect('event_details', event_id=event_id)
 
-    timestamp = datetime.now()
-    timestamp = timestamp.replace(tzinfo=timezone.utc)
+    timestamp = timezone.now()
+    #timestamp = timestamp.replace(tzinfo=timezone.utc)
 
     attendance = Attendance(user=request.user,
                     event=event, 
@@ -319,8 +319,8 @@ def prepay(request, event_id):
         messages.error(request, "Error: User has already prepaid for this event.")
         return redirect('event_details', event_id=event_id)
 
-    timestamp = datetime.now()
-    timestamp = timestamp.replace(tzinfo=timezone.utc)
+    timestamp = timezone.now()
+    #timestamp = timestamp.replace(tzinfo=timezone.utc)
 
     attendance = Attendance(user=request.user,
                     event=event, 
