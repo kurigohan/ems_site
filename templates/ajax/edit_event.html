@@ -59,7 +59,15 @@
         </table>
         </div>
     </div>
-    
+    <p>
+     <label>{{ event_form.is_public.label }}: </label>
+        {{ event_form.is_public }}
+    </p>   
+
+    <p>
+     <label>{{ event_form.prepay.label }}: </label>
+        {{ event_form.prepay}}
+    </p>   
 
 
      <!-- Prices -->
@@ -105,10 +113,7 @@
         </div>
      </div>
     <!-- End Prices -->
-    <p>
-     <label>{{ event_form.is_public.label }}: </label>
-        {{ event_form.is_public }}
-    </p>   
+
     <hr>
     <input class="btn btn-primary" type="submit" value="Edit  Event"/>
 

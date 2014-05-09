@@ -208,6 +208,14 @@ def approve_event(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     event.reservation.status = status_const.APPROVED
     event.reservation.save()
+    date = timezone.now()
+    new_attendee = Attendance(user=event.creator, 
+                                                event=event,
+                                                prepaid=False,
+                                                date_registered=date
+                                                )
+    new_attendee.save()
+
     return redirect('pending_events') 
 
 

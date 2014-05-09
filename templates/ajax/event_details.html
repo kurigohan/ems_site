@@ -97,7 +97,7 @@
 
 <hr>
 {% if attendance_list %}
-    {% if event.can_prepay %}
+    {% if event.prepay %}
         {% include 'include/prepaid_attendance_table.html' %}
     {% else %}
         {% include 'include/attendance_table.html' %}
