@@ -41,7 +41,7 @@ Requirement:
         See https://docs.djangoproject.com/en/dev/ref/databases/ for more info.
 
 
-	Before Running:
+Before Running:
 
 	In ems_site/settings.py , update the following if needed.
 
@@ -60,10 +60,11 @@ Requirement:
 	- use 'mysql.connector.django' if using MySQL Connector/Python
 
 
-	To Run :
+To Run :
 
     	1. From the terminal, change to the ems_site directory
     	2a. If first usage or changes to models were made, use the command 'python manage.py syncdb' to sync models to the mysql database
     	2b. If new fields were added to any models, the database will need to be recreated before running syncdb 
     	3. Use the command 'python manage.py runserver' to start the development server
     	4. Enter the server ip in your web browser (default is 127.0.0.1:8000)  to visit the site
+	
