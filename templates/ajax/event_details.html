@@ -70,19 +70,21 @@
 
 </table>
 
-{% if user == event.creator %}
+{% if permissions.creator %}
 <a href="{% url 'edit_event' event_id=event.id %}" class="btn btn-primary ajax-link">Edit</a>
 <a href="{% url 'delete_event' event_id=event.id %}" class="btn btn-primary confirm">Delete</a>
 {% endif %}
 
-{% if user.is_staff %}
+{% if permissions.mod %}
 <a href="{% url 'approve_event' event_id=event.id %}" class="btn btn-primary confirm">Approve</a>
 <a href="{% url 'deny_event' event_id=event.id %}" class="btn btn-primary confirm">Deny</a>
 {% endif %}
 
+{% if permissions.attend %}
 <a href="{% url 'attend' event_id=event.id %}" class="btn btn-primary confirm">Attend</a>
-{% if event.prepay %}
+{% if permissions.prepay %}
 <a href="{% url 'prepay' event_id=event.id %}" class="btn btn-primary confirm">Prepay</a>
+{% endif %}
 {% endif %}
 
 {% if messages %}
@@ -93,7 +95,7 @@
 </ul>
 {% endif %}
 
-
+<hr>
 {% if attendance_list %}
     {% if event.can_prepay %}
         {% include 'include/prepaid_attendance_table.html' %}

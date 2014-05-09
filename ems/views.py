@@ -131,7 +131,18 @@ def event_details(request, event_id, template_name="ajax/event_details.html"):
     """
     event = get_object_or_404(Event, pk=event_id)
     attendance_list = Attendance.objects.filter(event_id=event.id)
-    return render(request, template_name, {'event':event, 'attendance_list':attendance_list})
+    permissions = {'creator':False, 'mod': False,  'prepay': False, 'attend':False}
+
+    if request.user == event.creator:
+        permissions['creator'] = True
+    if request.user.is_staff and event.reservation.status == status_const.PENDING:
+        permissions['mod'] = True
+    if event.reservation.status == status_const.APPROVED:
+        permissions['attend'] = True
+        if event.prepay:
+            permissions['prepay'] = True
+
+    return render(request, template_name, {'event':event, 'attendance_list':attendance_list, 'permissions':permissions})
 
 
 
