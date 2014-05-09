@@ -9,8 +9,8 @@ from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User
 from django.db import transaction, IntegrityError, connection
 from django.contrib import messages
-
-from ems.forms import RegistrationForm, EventCreationForm, EventEditForm, ReservationEditForm, QueryForm, SummaryReportForm
+from django.db.models import Q
+from ems.forms import RegistrationForm, EventCreationForm, EventEditForm, ReservationEditForm, QueryForm, SummaryReportForm, SearchForm
 from ems.models import Event, Reservation, Location, Approval, Attendance, Category
 from ems import status_const # constants for reservation status
 
@@ -74,8 +74,16 @@ def all_events(request, template_name="ajax/all_events.html"):
     View all approved events/reservations
     """
     reservation_list = Reservation.objects.filter(status=status_const.APPROVED)
-
-    return render(request, template_name, {'reservation_list':reservation_list})
+    search_term = ""
+    if request.method == 'GET' and 'search_term' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            search_term = form.cleaned_data['search_term']
+    else:
+        form = SearchForm()
+    if search_term:
+        reservation_list = event_search(search_term)
+    return render(request, template_name, {'reservation_list':reservation_list, 'form':form})
 
 @login_required
 def create_event(request, template_name="ajax/create_event.html"):
@@ -138,7 +146,9 @@ def event_details(request, event_id, template_name="ajax/event_details.html"):
     if request.user.is_staff and event.reservation.status == status_const.PENDING:
         permissions['mod'] = True
     if event.reservation.status == status_const.APPROVED:
-        permissions['attend'] = True
+        user_register_count = Attendance.objects.filter(user=request.user, event=event).count()
+        if user_register_count == 0:
+            permissions['attend'] = True
         if event.prepay:
             permissions['prepay'] = True
 
@@ -339,3 +349,16 @@ def location_details(request, loc_id, template_name="ajax/location_details.html"
     location = get_object_or_404(Location, pk=loc_id)
     reservation_list = Reservation.objects.filter(status=status_const.APPROVED, location=location.id)
     return render(request, template_name, {'location':location, 'reservation_list':reservation_list})
+
+
+
+
+
+
+def event_search(term):
+    """
+    Search event names that contain the given search term
+    """
+
+    search_results = Reservation.objects.filter(Q(status=status_const.APPROVED), Q(event__name__icontains=term) | Q(event__description__icontains=term) | Q(location__name__icontains=term))
+    return search_results

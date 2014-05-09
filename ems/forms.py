@@ -110,3 +110,7 @@ class QueryForm(forms.Form):
 	    if self.cleaned_data['query'][:6].lower() != 'select':
 	        raise forms.ValidationError("The query must be a SELECT statement.")
 	    return self.cleaned_data
+
+
+class SearchForm(forms.Form):
+    search_term = forms.CharField(label='Search Term', max_length=50, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Search'}), required=False)
