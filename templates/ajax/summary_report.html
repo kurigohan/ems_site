@@ -19,8 +19,14 @@
         <td>${{revenue}}</td>
     </tr>
     <tr>
-        <td>Percent Prepaid Per Event Type: </td>
-        <td>{{prepayment}}</td>
+        <td>Prepaid Per Event Type: </td>
+        <td>
+
+            {% for current_category in category_payment_data.items %}
+                    {{current_category.0}} - {{current_category.1.2}}% ({{current_category.1.1}}/{{current_category.1.0}})<br/>
+            {% endfor %}
+
+        </td>
     </tr>
 </table>
 <br/>
