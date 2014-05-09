@@ -66,7 +66,8 @@ def my_events(request, template_name="ajax/my_events.html"):
     View all events created by the user
     """
     event_list = Event.objects.filter(creator=request.user)
-    return render(request, template_name, {'event_list':event_list})
+    attend_list = Attendance.objects.filter(user=request.user)
+    return render(request, template_name, {'event_list':event_list, 'attend_list':attend_list})
 
 @login_required
 def all_events(request, template_name="ajax/all_events.html"):
